@@ -250,7 +250,7 @@ class ModalLogin extends React.Component {
           this.PingAuthN.handleAuthNflow({ flowResponse: cachedFlowResponse, body: payload })
             .then(response => response.json())
             .then(jsonResponse => {
-              if (jsonResponse.status) {let success = this.Session.setAuthenticatedUserItem("flowResponse", JSON.stringify(jsonResponse));}
+              if (jsonResponse.status) { let success = this.Session.setAuthenticatedUserItem("flowResponse", JSON.stringify(jsonResponse)); }
               if (jsonResponse.status === "MFA_COMPLETED") {
                 this.PingAuthN.handleAuthNflow({ flowResponse: jsonResponse, body: "" })
                   .then(response => response.json())
@@ -261,7 +261,6 @@ class ModalLogin extends React.Component {
                     }
                   });
               } else {
-                console.log("DEBUG", JSON.stringify(jsonResponse));
                 // User got the OTP wrong. Try again.
                 this.toggleTab("3");
               }
