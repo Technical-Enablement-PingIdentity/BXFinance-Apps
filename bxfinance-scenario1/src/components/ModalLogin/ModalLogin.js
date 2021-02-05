@@ -318,7 +318,7 @@ class ModalLogin extends React.Component {
                   <h4>{data.titles.welcome}</h4>
                   <FormGroup className="form-group-light">
                     <Label for="username">{data.form.fields.username.label}</Label>
-                    <Input onChange={this.handleIDChange.bind(this)} type="text" name="username" id="username" placeholder={data.form.fields.username.placeholder} value={this.state.userName} /> {/* PING INTEGRATION added onChange. */}
+                    <Input onChange={this.handleIDChange.bind(this)} autoComplete="off" type="text" name="username" id="username" placeholder={data.form.fields.username.placeholder} value={this.state.userName} /> {/* PING INTEGRATION added onChange. */}
                   </FormGroup>
                   <FormGroup className="form-group-light">
                     {/* <CustomInput type="checkbox" id="remember" label={data.form.fields.remember.label} /> */}
@@ -363,7 +363,7 @@ class ModalLogin extends React.Component {
                   {this.state.loginMethod !== "iPhone" &&
                     <FormGroup className="form-group-light">
                       <Label for="otp">{data.form.fields.otp.label}</Label>
-                      <Input onChange={this.handleOTPChange.bind(this)} type="text" name="otp" id="otp" placeholder={data.form.fields.otp.placeholder} value={this.state.otp} />
+                      <Input onChange={this.handleOTPChange.bind(this)} autoComplete="off" type="text" name="otp" id="otp" placeholder={data.form.fields.otp.placeholder} value={this.state.otp} />
                     </FormGroup>}
                   {this.state.loginMethod !== "iPhone" &&
                     <div className="mb-3">
