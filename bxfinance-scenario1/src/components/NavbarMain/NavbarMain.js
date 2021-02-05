@@ -45,7 +45,7 @@ class NavbarMain extends React.Component {
     this.handleClose = this.handleClose.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
     
-    this.startSSOURI = "/idp/startSSO.ping?PartnerSpId=" + process.env.REACT_APP_HOST;
+    this.startSSOURI = "/idp/startSSO.ping?PartnerSpId=" + process.env.REACT_APP_HOST; //TODO this needs to be moved to ping-endpoints.json
     //The TargetResource param for registration is set to the startSSO endpoint to after reg we immediately trigger a login flow for better UX.
     this.pfRegURI = "/sp/startSSO.ping?SpSessionAuthnAdapterId=idprofiledefaultIdentityProfile&TargetResource=" + process.env.REACT_APP_HOST + this.startSSOURI + "&PolicyAction=identity.registration";
     /* END PING INTEGRATION: */
