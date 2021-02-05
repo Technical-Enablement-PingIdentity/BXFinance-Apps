@@ -155,7 +155,7 @@ class NavbarMain extends React.Component {
               this.refs.modalLogin.toggle();
             } else if (jsonResult.status == "FAILED") {
               this.refs.modalError.toggle("Authentication", jsonResult.userMessage);
-            }
+            } //TODO if we have to handle ID first skipping identifier_required status, add it here.
           })
           .catch(error => console.error('HANDLESUBMIT ERROR', error));
       } // Coming back as authenticated user from AIK or SLO request from Agentless IK.
