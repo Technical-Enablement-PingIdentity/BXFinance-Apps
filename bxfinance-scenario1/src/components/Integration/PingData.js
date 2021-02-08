@@ -11,7 +11,7 @@ class PingData {
 
     // Didn't abstract these since they shouldn't ever change. Right??? Maybe move these to JSON data file?
     pdReSTURI = "/directory/v1/"; //TODO breakout the version segment to its own variable in case it changes.
-    pdRootDN = "dc=bxfinance.org";
+    pdRootDN = process.env.REACT_APP_BASE_DN;
     pdPeopleRDN = 'ou=People,' + this.pdRootDN;
     pdConsentURI = "/consent";
     pdConsentVersion = "/v1";
