@@ -180,7 +180,7 @@ class AccountsTransfer extends React.Component {
                     </Row>
                     <Row className="submit-buttons">
                       <Col md={12} className="text-right">
-                        {/* <a href={process.env.PUBLIC_URL} className="text-info cancel">{data.form.buttons.cancel.label}</a> */}
+                        {/* <a href={window._env_.PUBLIC_URL} className="text-info cancel">{data.form.buttons.cancel.label}</a> */}
                         <Link to="/banking" className="text-info cancel">{data.form.buttons.cancel.label}</Link>
                         <Button color="primary" className="start-transfer" onClick={this.showStep2}>{data.form.buttons.start_transfer.label}</Button> {/* PING INTEGRATION: onClick handler here */}
                       </Col>
@@ -207,15 +207,15 @@ class AccountsTransfer extends React.Component {
                     </div>
                   </div>
                   <div className="app-approval-banner">
-                    <img src={process.env.PUBLIC_URL + "/images/icons/phone.jpg"} className="img-phone" alt="phone" />
+                    <img src={window._env_.PUBLIC_URL + "/images/icons/phone.jpg"} className="img-phone" alt="phone" />
                     <h3>Requires your approval:</h3>
                     <p>This transaction will take place after you approve it using your BXFinance app on iPhone. <a>What is this?</a></p>
-                    <img src={process.env.PUBLIC_URL + "/images/app-store-logos.svg"} className="app-store-logos" />
+                    <img src={window._env_.PUBLIC_URL + "/images/app-store-logos.svg"} className="app-store-logos" />
                   </div>
                   <Form>
                     <Row className="submit-buttons">
                       <Col md={12} className="text-right">
-                        <a href={process.env.PUBLIC_URL} className="text-info cancel">{data.form.buttons.cancel.label}</a>
+                        <a href={window._env_.PUBLIC_URL} className="text-info cancel">{data.form.buttons.cancel.label}</a>
                         <Button color="primary" className="start-transfer" onClick={this.showStep3}>{data.form.buttons.pending_transfer.label}</Button>
                       </Col>
                     </Row>
@@ -242,7 +242,7 @@ class AccountsTransfer extends React.Component {
                   <Form>
                     <Row className="submit-buttons">
                       <Col md={12} className="text-right">
-                        {/* <a href={process.env.PUBLIC_URL} className="text-link cancel">{data.form.buttons.close.label}</a> */}
+                        {/* <a href={window._env_.PUBLIC_URL} className="text-link cancel">{data.form.buttons.close.label}</a> */}
                         <Link to="/banking/pay-and-transfer" className="text-link cancel">{data.form.buttons.close.label}</Link>
                         <Button color="primary" className="start-transfer" onClick={this.showStep1}>{data.form.buttons.start_new_transfer.label}</Button>
                       </Col>
@@ -270,7 +270,7 @@ class AccountsTransfer extends React.Component {
                   <Form>
                     <Row className="submit-buttons">
                       <Col md={12} className="text-right">
-                        {/* <a href={process.env.PUBLIC_URL} className="text-link cancel">{data.form.buttons.close.label}</a> */}
+                        {/* <a href={window._env_.PUBLIC_URL} className="text-link cancel">{data.form.buttons.close.label}</a> */}
                         <Link to="/banking/pay-and-transfer" className="text-link cancel">{data.form.buttons.close.label}</Link>
                         <Button color="primary" className="start-transfer" onClick={this.showStep1}>{data.form.buttons.start_new_transfer.label}</Button>
                       </Col>

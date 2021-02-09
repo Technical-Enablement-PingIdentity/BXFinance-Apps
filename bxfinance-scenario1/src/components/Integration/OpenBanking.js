@@ -23,7 +23,8 @@ class OpenBanking {
     */
     constructor() {
         // Didn't abstract these since they shouldn't ever change. I say that now.
-        this.mockOBhost = "https://babbtx-aspsp.herokuapp.com/OpenBanking";
+        // this.mockOBhost = "https://babbtx-aspsp.herokuapp.com/OpenBanking";
+        this.mockOBhost = "https://staging-babbtx-aspsp.herokuapp.com/OpenBanking/v2/accounts"; //TODO only use staging server for testing changes.
         this.mockOBAPIver = "/v2";
         this.mockOBbalURI = "/balances";
         this.mockOBacctsURI = "/accounts";

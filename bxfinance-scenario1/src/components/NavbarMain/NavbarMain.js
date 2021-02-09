@@ -45,9 +45,9 @@ class NavbarMain extends React.Component {
     this.handleClose = this.handleClose.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
     
-    this.startSSOURI = "/idp/startSSO.ping?PartnerSpId=" + process.env.REACT_APP_HOST; //TODO this needs to be moved to ping-endpoints.json
+    this.startSSOURI = "/idp/startSSO.ping?PartnerSpId=" + window._env_.REACT_APP_HOST; //TODO this needs to be moved to ping-endpoints.json
     //The TargetResource param for registration is set to the startSSO endpoint to after reg we immediately trigger a login flow for better UX.
-    this.pfRegURI = "/sp/startSSO.ping?SpSessionAuthnAdapterId=idprofiledefaultIdentityProfile&TargetResource=" + process.env.REACT_APP_HOST + this.startSSOURI + "&PolicyAction=identity.registration";
+    this.pfRegURI = "/sp/startSSO.ping?SpSessionAuthnAdapterId=idprofiledefaultIdentityProfile&TargetResource=" + window._env_.REACT_APP_HOST + this.startSSOURI + "&PolicyAction=identity.registration";
     /* END PING INTEGRATION: */
   }
 
@@ -126,7 +126,7 @@ class NavbarMain extends React.Component {
       window.location.assign("https://desktop.pingone.com/anywealthadvisor/");
     } else {
       //Banking customers get SLO'd.
-      const url = "/sp/startSLO.ping?TargetResource=" + process.env.REACT_APP_HOST + process.env.PUBLIC_URL + "/";
+      const url = "/sp/startSLO.ping?TargetResource=" + window._env_.REACT_APP_HOST + window._env_.PUBLIC_URL + "/";
       window.location.assign(url);
     }
 
@@ -177,7 +177,7 @@ class NavbarMain extends React.Component {
               Since all sessions are cleaned up, we are just handling the redirect
               back to the TargetResource ourselves which is /app/.
               */
-              targetApp = process.env.REACT_APP_HOST + process.env.PUBLIC_URL + "/";
+              targetApp = window._env_.REACT_APP_HOST + window._env_.PUBLIC_URL + "/";
               //targetApp = jsonData.resumePath + "?source=" + adapter;
             }
             else if (jsonData.bxFinanceUserType == "AnyWealthAdvisor" || jsonData.bxFinanceUserType == "AnyMarketing") {
@@ -222,27 +222,27 @@ class NavbarMain extends React.Component {
         {/* DESKTOP NAV */}
         <Navbar color="dark" dark expand="md" className="navbar-desktop">
           <Container>
-            <Link to="/" className="navbar-brand"><img src={process.env.PUBLIC_URL + "/images/logo-white.png"} alt={data.brand} /></Link>
+            <Link to="/" className="navbar-brand"><img src={window._env_.PUBLIC_URL + "/images/logo-white.png"} alt={data.brand} /></Link>
             <NavbarToggler onClick={this.toggle.bind(this)} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="justify-content-end ml-auto navbar-nav-utility" navbar>
                 <NavItem>
-                  <NavLink><img src={process.env.PUBLIC_URL + "/images/icons/search.svg"} alt={data.menus.utility.search} /></NavLink>
+                  <NavLink><img src={window._env_.PUBLIC_URL + "/images/icons/search.svg"} alt={data.menus.utility.search} /></NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink><img src={process.env.PUBLIC_URL + "/images/icons/map-marker.svg"} alt={data.menus.utility.locations} /></NavLink>
+                  <NavLink><img src={window._env_.PUBLIC_URL + "/images/icons/map-marker.svg"} alt={data.menus.utility.locations} /></NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink><img src={process.env.PUBLIC_URL + "/images/icons/support.svg"} alt={data.menus.utility.support} /></NavLink>
+                  <NavLink><img src={window._env_.PUBLIC_URL + "/images/icons/support.svg"} alt={data.menus.utility.support} /></NavLink>
                 </NavItem>
                 {/* BEGIN PING INTEGRATION: added conditional rendering logic for Sign In/Out links. */}
                 {this.state.loggedOut &&
                   <NavItem className="login">
-                    <NavLink href="#" onClick={this.triggerModalLogin.bind(this)}><img src={process.env.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.login} className="mr-1" /> {data.menus.utility.login}</NavLink>
+                    <NavLink href="#" onClick={this.triggerModalLogin.bind(this)}><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.login} className="mr-1" /> {data.menus.utility.login}</NavLink>
                   </NavItem>}
                 {!this.state.loggedOut &&
                   <NavItem className="logout">
-                    <Link to="/" onClick={this.startSLO.bind(this)} className="nav-link"><img src={process.env.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.logout} className="mr-1" /> {data.menus.utility.logout}</Link>
+                    <Link to="/" onClick={this.startSLO.bind(this)} className="nav-link"><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.logout} className="mr-1" /> {data.menus.utility.logout}</Link>
                   </NavItem>}
                 {this.state.loggedOut &&
                   <NavItem className="register">
@@ -299,7 +299,7 @@ class NavbarMain extends React.Component {
             <NavbarToggler onClick={this.toggle.bind(this)} />
           </div>
           <div className="mobilenav-brand">
-            <Link to="/" className="navbar-brand"><img src={process.env.PUBLIC_URL + "/images/logo-white.png"} alt={data.brand} /></Link>
+            <Link to="/" className="navbar-brand"><img src={window._env_.PUBLIC_URL + "/images/logo-white.png"} alt={data.brand} /></Link>
           </div>
           <div className="mobilenav-login">
             <NavLink href="#" className="login" onClick={this.triggerModalLogin.bind(this)}>Sign In</NavLink>
@@ -327,23 +327,23 @@ class NavbarMain extends React.Component {
             </Nav>
             <Nav className="navbar-nav-utility" navbar>
               <NavItem>
-                <NavLink><img src={process.env.PUBLIC_URL + "/images/icons/search.svg"} alt={data.menus.utility.search} className="mr-1" /> {data.menus.utility.search}</NavLink>
+                <NavLink><img src={window._env_.PUBLIC_URL + "/images/icons/search.svg"} alt={data.menus.utility.search} className="mr-1" /> {data.menus.utility.search}</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><img src={process.env.PUBLIC_URL + "/images/icons/map-marker.svg"} alt={data.menus.utility.locations} className="mr-1" /> {data.menus.utility.locations}</NavLink>
+                <NavLink><img src={window._env_.PUBLIC_URL + "/images/icons/map-marker.svg"} alt={data.menus.utility.locations} className="mr-1" /> {data.menus.utility.locations}</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><img src={process.env.PUBLIC_URL + "/images/icons/support.svg"} alt={data.menus.utility.support} className="mr-1" /> {data.menus.utility.support}</NavLink>
+                <NavLink><img src={window._env_.PUBLIC_URL + "/images/icons/support.svg"} alt={data.menus.utility.support} className="mr-1" /> {data.menus.utility.support}</NavLink>
               </NavItem>
               <NavItem className="login">
-                <NavLink href="#" onClick={this.triggerModalLogin.bind(this)}><img src={process.env.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.login} className="mr-1" /> {data.menus.utility.login}</NavLink>
+                <NavLink href="#" onClick={this.triggerModalLogin.bind(this)}><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.login} className="mr-1" /> {data.menus.utility.login}</NavLink>
               </NavItem>
               <NavItem className="logout d-none">
-                <Link to="/" className="nav-link"><img src={process.env.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.logout} className="mr-1" /> {data.menus.utility.logout}</Link>
+                <Link to="/" className="nav-link"><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.logout} className="mr-1" /> {data.menus.utility.logout}</Link>
               </NavItem>
               <NavItem className="register">
                 {/* PING INTEGRATION: added env var and link to PF LIP reg form. */}
-                <NavLink href={this.pfRegURI}><img src={process.env.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.logout} className="mr-1" /> {data.menus.utility.register}</NavLink>
+                <NavLink href={this.pfRegURI}><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.logout} className="mr-1" /> {data.menus.utility.register}</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

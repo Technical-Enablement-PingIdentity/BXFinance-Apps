@@ -198,7 +198,7 @@ class CommunicationPreferences extends React.Component {
                     }
                     <FormGroup className="buttons submit-buttons">
                       <Button color="primary" onClick={this.showStep2}>Save</Button>
-                      <a href={process.env.PUBLIC_URL + "/banking/profile-settings"} className="text-info cancel">Cancel</a>
+                      <a href={window._env_.PUBLIC_URL + "/banking/profile-settings"} className="text-info cancel">Cancel</a>
                     </FormGroup>
                   </Form>
                 </div>

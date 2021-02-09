@@ -102,7 +102,7 @@ const SearchAutocomplete = () => {
           displaySuggestions={displaySuggestions}
           suggestions={filteredSuggestions}
         />
-        <img src={process.env.PUBLIC_URL + "/images/icons/search.svg"} className="img-search" />
+        <img src={window._env_.PUBLIC_URL + "/images/icons/search.svg"} className="img-search" />
       </form>
     </div>
   );
@@ -156,7 +156,7 @@ class Advisor extends React.Component {
                   <CardBody>
                     <Media>
                       <Media left href="#">
-                        <Media object src={process.env.PUBLIC_URL + "/images/anywealthadvisor-photo.png"} alt="Generic placeholder image" />
+                        <Media object src={window._env_.PUBLIC_URL + "/images/anywealthadvisor-photo.png"} alt="Generic placeholder image" />
                       </Media>
                       <Media body>
                         {/* PING INTEGRATION */}

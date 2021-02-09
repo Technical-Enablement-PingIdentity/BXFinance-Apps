@@ -151,7 +151,7 @@ const SearchAutocomplete = (props) => {
           displaySuggestions={displaySuggestions}
           suggestions={filteredSuggestions}
         />
-        <img src={process.env.PUBLIC_URL + "/images/icons/search.svg"} className="img-search" />
+        <img src={window._env_.PUBLIC_URL + "/images/icons/search.svg"} className="img-search" />
       </form>
     </div>
   );
@@ -236,7 +236,7 @@ class AdvisorClient extends React.Component {
                   <CardBody>
                     <Media>
                       <Media left href="#">
-                        <Media object src={process.env.PUBLIC_URL + "/images/anywealthadvisor-photo.png"} alt="Generic placeholder image" />
+                        <Media object src={window._env_.PUBLIC_URL + "/images/anywealthadvisor-photo.png"} alt="Generic placeholder image" />
                       </Media>
                       <Media body>
                         <span dangerouslySetInnerHTML={{ __html: data.profile.advisor.content }}></span>
@@ -315,11 +315,11 @@ class AdvisorClient extends React.Component {
                               <Row>
                                 <Col md="8">
                                   <p><strong>{data.client_detail.content.portfolio_overview}</strong></p>
-                                  <img src={process.env.PUBLIC_URL + "/images/advisor-client-chart.png"} className="img-fluid" />
+                                  <img src={window._env_.PUBLIC_URL + "/images/advisor-client-chart.png"} className="img-fluid" />
                                 </Col>
                                 <Col md="4">
                                   <p><strong>{data.client_detail.content.portfolio_view}</strong></p>
-                                  <img src={process.env.PUBLIC_URL + "/images/advisor-client-pie-chart.png"} className="img-fluid" />
+                                  <img src={window._env_.PUBLIC_URL + "/images/advisor-client-pie-chart.png"} className="img-fluid" />
                                 </Col>
                               </Row>
                             </Col>

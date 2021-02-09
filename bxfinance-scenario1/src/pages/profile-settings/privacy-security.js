@@ -255,7 +255,7 @@ class PrivacySecurity extends React.Component {
                       <Container>
                         <div>
                           <Row>
-                            <Col md={12} lg={4}><img src={process.env.PUBLIC_URL + partner1.logo} alt="" /></Col>
+                            <Col md={12} lg={4}><img src={window._env_.PUBLIC_URL + partner1.logo} alt="" /></Col>
                             <Col md={12} lg={4}>
                               <CustomInput type="radio" id={`${partner1.name}_yes`} name={partner1.name} label="Yes" />
                               <CustomInput type="radio" id={`${partner1.name}_no`} readOnly checked name={partner1.name} label="No" />
@@ -265,7 +265,7 @@ class PrivacySecurity extends React.Component {
                         </div>
                         <div>
                           <Row className="gray">
-                            <Col md={12} lg={4}><img src={process.env.PUBLIC_URL + partner2.logo} alt="" /></Col>
+                            <Col md={12} lg={4}><img src={window._env_.PUBLIC_URL + partner2.logo} alt="" /></Col>
                             <Col md={12} lg={4}>
                               <CustomInput type="radio" id={`${partner2.name}_yes`} name={partner2.name} label="Yes" />
                               <CustomInput type="radio" id={`${partner2.name}_no`} readOnly checked name={partner2.name} label="No" />
@@ -276,7 +276,7 @@ class PrivacySecurity extends React.Component {
                         {/* PING INTEGRATION: This block "partner3" is only partner block modified for demos. The others are static.  */}
                         <div>
                           <Row>
-                            <Col md={12} lg={4}><img src={process.env.PUBLIC_URL + partner3.logo} alt="" /></Col>
+                            <Col md={12} lg={4}><img src={window._env_.PUBLIC_URL + partner3.logo} alt="" /></Col>
                             <Col md={12} lg={4}>
                               <CustomInput type="radio" id={`${partner3.name}_yes`} checked={this.state[partner3.name]} name={partner3.name} label="Yes" onClick={this.toggle} />
                               <CustomInput type="radio" id={`${partner3.name}_no`} checked={!this.state[partner3.name]} name={partner3.name} label="No" onClick={this.toggle} />

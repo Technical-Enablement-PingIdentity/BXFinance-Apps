@@ -19,4 +19,16 @@ FROM nginx:stable-alpine
 COPY nginx.conf /etc/nginx
 COPY --from=build /app/build /usr/share/nginx/html/app
 EXPOSE 5000
-CMD ["nginx","-g","daemon off;"]
+
+# Copy .env file and shell script to container
+WORKDIR /usr/share/nginx/html/app
+COPY ./env.sh .
+COPY .env .
+
+# Add bash - not included with Alpine-based images
+RUN apk add --no-cache bash
+
+# Make our shell script executable
+RUN chmod +x env.sh
+
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/app/env.sh" && "nginx","-g","daemon off;"]

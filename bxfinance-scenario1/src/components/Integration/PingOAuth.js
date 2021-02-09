@@ -31,7 +31,7 @@ class PingOAuth {
     @param {string} scopes Optional OAuth scopes. Default is an empty string.
     @return {string} AuthZ code.
     */
-    async getAuthCode({client = "pa_wam", responseType = "code", redirectURI = process.env.REACT_APP_HOST + "/app/banking", scopes = ""} = {}) {
+    async getAuthCode({client = "pa_wam", responseType = "code", redirectURI = window._env_.REACT_APP_HOST + "/app/banking", scopes = ""} = {}) {
         console.info("PingOAuth.js", "Getting an auth code for the getToken() call.");
 
         const myHeaders = new Headers();
@@ -67,7 +67,7 @@ class PingOAuth {
     @param {string} scopes Optional OAuth scopes. Default is an empty string.
     @return {string} OAuth access token, base64 encoded.
     */
-    async getToken({uid, client = "pa_wam", responseType = "code", redirectURI = process.env.REACT_APP_HOST + "/app/banking", scopes = ""} = {}) {
+    async getToken({uid, client = "pa_wam", responseType = "code", redirectURI = window._env_.REACT_APP_HOST + "/app/banking", scopes = ""} = {}) {
         console.info("PingOAuth.js", "Getting a token.");
 
         if (responseType == "code") {

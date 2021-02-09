@@ -17,7 +17,7 @@ function Home() {
   return (
     <div className="home">
       <NavbarMain></NavbarMain>
-      <Jumbotron fluid className="jumbotron-hero-home" style={{backgroundImage: `url(${process.env.PUBLIC_URL}/images/home-hero-background.jpg)`}}>
+      <Jumbotron fluid className="jumbotron-hero-home" style={{backgroundImage: `url(${window._env_.PUBLIC_URL}/images/home-hero-background.jpg)`}}>
         <Container>
           <Row>
             <Col md="6" lg="8">

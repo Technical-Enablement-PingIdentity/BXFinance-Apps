@@ -24,7 +24,7 @@ class ModalError extends React.Component {
       errorMsg: "Please contact Ping Identity Technical Enablement.",
     };
     this.toggle = this.toggle.bind(this);
-    this.startSSOURI = "/idp/startSSO.ping?PartnerSpId=" + process.env.REACT_APP_HOST; //TODO this needs to be moved to ping-endpoints.json
+    this.startSSOURI = "/idp/startSSO.ping?PartnerSpId=" + window._env_.REACT_APP_HOST; //TODO this needs to be moved to ping-endpoints.json
   }
   toggle(title, msg, callBack) {
     this.setState({
@@ -47,7 +47,7 @@ class ModalError extends React.Component {
           className="modal-error"
         >
           <ModalHeader toggle={this.toggle.bind(this)} close={closeBtn}>
-            <img src={process.env.PUBLIC_URL + "/images/logo.svg"} alt="logo" />
+            <img src={window._env_.PUBLIC_URL + "/images/logo.svg"} alt="logo" />
           </ModalHeader>
           <ModalBody>
             <h4>{this.state.errorTitle}</h4>
