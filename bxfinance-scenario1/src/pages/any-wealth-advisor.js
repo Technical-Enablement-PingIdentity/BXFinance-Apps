@@ -1,7 +1,7 @@
 // Packages
 import React from 'react';
 import {
-  Button, Jumbotron, Row, Col,
+  Button, Row, Col,
   Collapse,
   Container,
   Navbar,
@@ -151,12 +151,12 @@ class AnyWealthAdvisor extends React.Component {
                     <Col md="6">
                       <h5>{data.profile.porfolio_growth.title}</h5>
                       <p dangerouslySetInnerHTML={{__html: data.profile.porfolio_growth.content}}></p>
-                      <img src={window._env_.PUBLIC_URL + "/images/anywealthadvisor-graph-chart.png"} className="img-fluid my-3" />
+                      <img src={window._env_.PUBLIC_URL + "/images/anywealthadvisor-graph-chart.png"} className="img-fluid my-3" alt='Porfolio Growth'/>
                     </Col>
                     <Col md="6">
                       <h5>{data.profile.porfolio_allocations.title}</h5>
                       <p dangerouslySetInnerHTML={{__html: data.profile.porfolio_allocations.content}}></p>
-                      <img src={window._env_.PUBLIC_URL + "/images/anywealthadvisor-pie-chart.png"} className="img-pie-chart" />
+                      <img src={window._env_.PUBLIC_URL + "/images/anywealthadvisor-pie-chart.png"} className="img-pie-chart" alt='Portfolio Allocations'/>
                       <p className="text-right">
                         <Button color="link">{data.profile.porfolio_allocations.button}</Button>
                       </p>
