@@ -22,7 +22,7 @@ const AccountsBalance = (props) => {
   return (
     <div className="accounts-balance">
       <div className="accounts-balance-header">
-        <a href="#" onClick={toggle}>{props.balance.title}</a>
+        <a href="/#" onClick={toggle}>{props.balance.title}</a>
       <Button color="primary">See All Activity</Button>
       </div>
       <Collapse isOpen={isOpen}>
