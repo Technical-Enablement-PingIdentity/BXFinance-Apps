@@ -1,7 +1,7 @@
 // Packages
 import React from 'react';
 import {
-  Button, Jumbotron, Row, Col,
+  Button, Row, Col,
   Collapse,
   Container,
   Navbar,
@@ -9,7 +9,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Media, //TODO this shows unused. validate and remove.
   Modal,
   ModalHeader,
   ModalBody
@@ -149,7 +148,7 @@ const SearchAutocomplete = () => {
           displaySuggestions={displaySuggestions}
           suggestions={filteredSuggestions}
         />
-        <img src={window._env_.PUBLIC_URL + "/images/icons/search.svg"} className="img-search" />
+        <img src={window._env_.PUBLIC_URL + "/images/icons/search.svg"} className="img-search" alt=''/>
       </form>
       <Modal isOpen={isModalOpen} toggle={triggerModal} className="modal-lg any-marketing modal-record" centered={true} backdropClassName="modal-backdrop-record">
         <ModalHeader toggle={triggerModal}>Record Overview</ModalHeader>
@@ -256,9 +255,9 @@ class AnyMarketing extends React.Component {
                   </NavItem>
                   <NavItem className="logout">
                     {!this.state.loggedOut && 
-                      <a onClick={this.signOut.bind(this)} className="nav-link"><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.logout} className="mr-1" /> {data.menus.utility.logout}</a>}
+                      <a onClick={this.signOut.bind(this)} className="nav-link" ><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.logout} className="mr-1" /> {data.menus.utility.logout}</a>}
                     {this.state.loggedOut && 
-                      <a onClick={this.signOut.bind(this)} className="nav-link"><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.login} className="mr-1" /> {data.menus.utility.logout}</a>}
+                      <a onClick={this.signOut.bind(this)} className="nav-link" ><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.login} className="mr-1" /> {data.menus.utility.logout}</a>}
                   </NavItem>
                 </Nav>
               </Collapse>
@@ -357,7 +356,7 @@ class AnyMarketing extends React.Component {
                   </Row>
                   <Row>
                     <Col>
-                      <img src={window._env_.PUBLIC_URL + "/images/any-marketing-table.png"} className="img-fluid mb-5" />
+                      <img src={window._env_.PUBLIC_URL + "/images/any-marketing-table.png"} className="img-fluid mb-5" alt='' />
                     </Col>
                   </Row>
                 </div>
@@ -369,10 +368,10 @@ class AnyMarketing extends React.Component {
                   <h4 className="mb-4">{data.metrics.title}</h4>
                   <Row>
                     <Col md="4">
-                      <img src={window._env_.PUBLIC_URL + "/images/any-marketing-pie-chart.png"} className="img-fluid" />
+                      <img src={window._env_.PUBLIC_URL + "/images/any-marketing-pie-chart.png"} className="img-fluid" alt=''/>
                     </Col>
                     <Col md="8">
-                      <img src={window._env_.PUBLIC_URL + "/images/any-marketing-graph-chart.png"} className="img-fluid" />
+                      <img src={window._env_.PUBLIC_URL + "/images/any-marketing-graph-chart.png"} className="img-fluid" alt=''/>
                     </Col>
                   </Row>
                 </div>
