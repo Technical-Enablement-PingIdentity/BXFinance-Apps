@@ -7,10 +7,10 @@ import "./FormPassword.scss";
 
 class FormPassword extends React.Component {
   componentDidMount () {
-    var eye = document.querySelectorAll(".icon-eye");
-    var inputEye = document.querySelectorAll(".form-password > input");
+    let eye = document.querySelectorAll(".icon-eye");
+    let inputEye = document.querySelectorAll(".form-password > input");
 
-    for(var i=0; i < eye.length; i++){
+    for(let i=0; i < eye.length; i++){
       eye[i].addEventListener('mousedown', function(){
         inputEye[i - 1].type = "text";
       });  
