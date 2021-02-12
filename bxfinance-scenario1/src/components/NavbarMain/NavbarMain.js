@@ -150,10 +150,10 @@ class NavbarMain extends React.Component {
           .then(response => response.json())
           .then(jsonResult => {
             let success = this.Session.setAuthenticatedUserItem("flowResponse", JSON.stringify(jsonResult)); //Browser's sessionStorage object only stores strings.
-            if (jsonResult.status == "IDENTIFIER_REQUIRED") {
+            if (jsonResult.status === "IDENTIFIER_REQUIRED") {
               //pop the ID first modal. 
               this.refs.modalLogin.toggle();
-            } else if (jsonResult.status == "FAILED") {
+            } else if (jsonResult.status === "FAILED") {
               this.refs.modalError.toggle("Authentication", jsonResult.userMessage);
             } //TODO if we have to handle ID first skipping identifier_required status, add it here.
           })
@@ -180,7 +180,7 @@ class NavbarMain extends React.Component {
               targetApp = window._env_.REACT_APP_HOST + window._env_.PUBLIC_URL + "/";
               //targetApp = jsonData.resumePath + "?source=" + adapter;
             }
-            else if (jsonData.bxFinanceUserType == "AnyWealthAdvisor" || jsonData.bxFinanceUserType == "AnyMarketing") {
+            else if (jsonData.bxFinanceUserType === "AnyWealthAdvisor" || jsonData.bxFinanceUserType === "AnyMarketing") {
               this.Session.setAuthenticatedUserItem("email", jsonData.Email);
               this.Session.setAuthenticatedUserItem("subject", jsonData.subject);
               this.Session.setAuthenticatedUserItem("firstName", jsonData.FirstName);
