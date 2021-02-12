@@ -44,6 +44,7 @@ class OpenBanking {
         //If we had to time to be cool, we could have extracted the uid from the token.
         console.info("OpenBanking.js", "Provisioning bank accounts.");
 
+        let acctIdsArr = [];
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + token);
 
