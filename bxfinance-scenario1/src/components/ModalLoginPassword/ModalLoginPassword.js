@@ -89,9 +89,9 @@ class ModalLoginPassword extends React.Component {
   }
   toggleTab(tab) {
     /* BEGIN PING INTEGRATION: We're letting PF handle SSPR to demo Velocity templates. */
-    if (tab == '4') {
+    if (tab === '4') {
       window.location.assign(data.pfAcctRecoveryURI);
-    } else if (tab == '5') {
+    } else if (tab === '5') {
       window.location.assign(data.pfPwdResetURI);
     } else {
       /* END PING INTEGRATION */
@@ -190,15 +190,15 @@ class ModalLoginPassword extends React.Component {
       loginError: false,
       loginErrorMsg: ""
     });
-    const pswd = tab == '2' ? this.state.swaprods : "WTF?"; //TODO Do we care about the tab param here? Toss?
+    const pswd = tab === '2' ? this.state.swaprods : "WTF?"; //TODO Do we care about the tab param here? Toss?
     const cachedFlowResponse = JSON.parse(this.Session.getAuthenticatedUserItem("flowResponse"));
 
     if (pswd) { //TODO do we need this test anymore?
       let data = "";
 
-      switch (tab) {
+      switch (tab) { // Each case corresponds to a tab pane in the UI.
         case "1":
-          // Usernmae/password form. This is the default state. Will probably never be called from here.
+          // Usernmae/password form. This is the default state for the component. Will probably never be called from here.
           this.toggleTab("1");
           break;
         case "2":
@@ -210,7 +210,7 @@ class ModalLoginPassword extends React.Component {
               
               if (jsonResults.status === "RESUME") {
                 this.PingAuthN.handleAuthNflow({ flowResponse: jsonResults });//Don't need to do anything more than call handleAuthNFlow(). RESUME always results in a redireect to the TargetResource.
-              } else if (jsonResults.status == "DEVICE_PROFILE_REQUIRED") {
+              } else if (jsonResults.status === "DEVICE_PROFILE_REQUIRED") {
                 console.info("ModalLoginPassword.js","PingOne Risk eval needs device profile.");
                 window.profileDevice(this.buildDeviceProfile);
                 //BEGIN DELAY: P1Risk device profiling scripts take just long enough to run that we were trying to send the profile to the authN API before we had it.
@@ -253,14 +253,14 @@ class ModalLoginPassword extends React.Component {
                     });
                 }, 1000, jsonResults, this.deviceProfileString);
                 //END DELAY.
-              } else if (jsonResults.code == "VALIDATION_ERROR") {
+              } else if (jsonResults.code === "VALIDATION_ERROR") {
                 console.info("Validation Error", jsonResults.details[0].userMessage);
                 this.setState({
                   loginError: true,
                   loginErrorMsg: jsonResults.details[0].userMessage
                 });
               } else {
-                throw "Flow Status Exception: Unexpected status."; //TODO This is probably a corner case, but we need to use ModalError.js for this.
+                throw new Error("Flow Status Exception: Unexpected status."); //TODO This is probably a corner case, but we need to use ModalError.js for this.
               }
             })
             .catch(e => {
