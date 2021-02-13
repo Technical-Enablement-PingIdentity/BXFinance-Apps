@@ -23,12 +23,12 @@ EXPOSE 5000
 # Copy .env file and shell script to container
 WORKDIR /usr/share/nginx/html/app
 COPY ./env.sh .
-COPY .env .
+COPY ./.env .
 
 # Add bash - not included with Alpine-based images
-RUN apk add --no-cache bash
+#RUN apk add --no-cache bash
 
 # Make our shell script executable
-RUN chmod +x env.sh
+#RUN chmod +x env.sh
 
-CMD ["/bin/bash", "-c", "/usr/share/nginx/html/app/env.sh" && "nginx","-g","daemon off;"]
+CMD ["sh", "-c", "/usr/share/nginx/html/app/env.sh && nginx -g \"daemon off;\""]
