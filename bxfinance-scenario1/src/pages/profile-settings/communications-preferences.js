@@ -15,7 +15,6 @@ import WelcomeBar from '../../components/WelcomeBar';
 import FooterMain from '../../components/FooterMain';
 import AccountsSubnav from '../../components/AccountsSubnav';
 import AccountsDropdown from '../../components/AccountsDropdown';
-import AccountsSectionNav from '../../components/AccountsSectionNav';
 import CardRewards from '../../components/CardRewards';
 import Session from '../../components/Utils/Session'; /* PING INTEGRATION: */
 import PingOAuth from '../../components/Integration/PingOAuth'; /* PING INTEGRATION: */
@@ -90,9 +89,9 @@ class CommunicationPreferences extends React.Component {
     let consentState = {};
     let checkedState = {};
     const delimiterPos = event.target.id.indexOf("_");
-    consentState[event.target.id.substring(0, delimiterPos)] = event.target.id.substring(delimiterPos + 1) == "yes" ? true : false;
+    consentState[event.target.id.substring(0, delimiterPos)] = event.target.id.substring(delimiterPos + 1) === "yes" ? true : false;
     this.setState(consentState);
-    checkedState[event.target.id.substring(0, delimiterPos) + "Checked"] = event.target.id.substring(delimiterPos + 1) == "yes" ? true : false;
+    checkedState[event.target.id.substring(0, delimiterPos) + "Checked"] = event.target.id.substring(delimiterPos + 1) === "yes" ? true : false;
     this.setState(checkedState);
   }
   /* END PING INTEGRATION:  */
@@ -111,9 +110,9 @@ class CommunicationPreferences extends React.Component {
               sms: consentData._embedded.consents[0].data.sms,
               email: consentData._embedded.consents[0].data.email,
               mail: consentData._embedded.consents[0].data.homeAddress,
-              smsChecked: consentData._embedded.consents[0].data.sms == true ? true : false,
-              emailChecked: consentData._embedded.consents[0].data.email == true ? true : false,
-              mailChecked: consentData._embedded.consents[0].data.homeAddress == true ? true : false,
+              smsChecked: consentData._embedded.consents[0].data.sms === true ? true : false,
+              emailChecked: consentData._embedded.consents[0].data.email === true ? true : false,
+              mailChecked: consentData._embedded.consents[0].data.homeAddress === true ? true : false,
               consentId: consentData._embedded.consents[0].id
             });
           }
@@ -133,9 +132,9 @@ class CommunicationPreferences extends React.Component {
                   sms: consentData._embedded.consents[0].data.sms,
                   email: consentData._embedded.consents[0].data.email,
                   mail: consentData._embedded.consents[0].data.homeAddress,
-                  smsChecked: consentData._embedded.consents[0].data.sms == true ? true : false,
-                  emailChecked: consentData._embedded.consents[0].data.email == true ? true : false,
-                  mailChecked: consentData._embedded.consents[0].data.homeAddress == true ? true : false,
+                  smsChecked: consentData._embedded.consents[0].data.sms === true ? true : false,
+                  emailChecked: consentData._embedded.consents[0].data.email === true ? true : false,
+                  mailChecked: consentData._embedded.consents[0].data.homeAddress === true ? true : false,
                   consentId: consentData._embedded.consents[0].id
                 });
               }
@@ -174,7 +173,7 @@ class CommunicationPreferences extends React.Component {
                 <h1>{data.title}</h1>
                 <AccountsDropdown text={data.dropdown} />
               </div>
-              {this.state.step == 1 &&
+              {this.state.step === 1 &&
                 <div className="module module-step1">
                   <h2>{data.steps[0].title}</h2>
                   <p>{data.steps[0].description}</p>
@@ -182,7 +181,7 @@ class CommunicationPreferences extends React.Component {
                   <Form>
                     {
                       Object.keys(data.steps[0].communication_types).map(index => {
-                        commDetails = data.steps[0].communication_types[index].name == "sms" ? this.Session.getAuthenticatedUserItem("mobile") : data.steps[0].communication_types[index].name == "email" ? this.Session.getAuthenticatedUserItem("email") : this.Session.getAuthenticatedUserItem("fullAddress");
+                        commDetails = data.steps[0].communication_types[index].name === "sms" ? this.Session.getAuthenticatedUserItem("mobile") : data.steps[0].communication_types[index].name === "email" ? this.Session.getAuthenticatedUserItem("email") : this.Session.getAuthenticatedUserItem("fullAddress");
                         commType = data.steps[0].communication_types[index].name;
                         return (
                           <>
@@ -203,7 +202,7 @@ class CommunicationPreferences extends React.Component {
                   </Form>
                 </div>
               }
-              {this.state.step == 2 &&
+              {this.state.step === 2 &&
                 <div className="module module-step2">
                   <h2 className="confirmation">{data.steps[1].title}</h2>
                   <p>{data.steps[1].description}</p>
@@ -211,7 +210,7 @@ class CommunicationPreferences extends React.Component {
                   <Form>
                     {
                       Object.keys(data.steps[1].communication_types).map(index => {
-                        commDetails = data.steps[0].communication_types[index].name == "sms" ? this.Session.getAuthenticatedUserItem("mobile") : data.steps[0].communication_types[index].name == "email" ? this.Session.getAuthenticatedUserItem("email") : this.Session.getAuthenticatedUserItem("fullAddress");
+                        commDetails = data.steps[0].communication_types[index].name === "sms" ? this.Session.getAuthenticatedUserItem("mobile") : data.steps[0].communication_types[index].name === "email" ? this.Session.getAuthenticatedUserItem("email") : this.Session.getAuthenticatedUserItem("fullAddress");
                         commType = data.steps[0].communication_types[index].name;
                         return (
                           <>
