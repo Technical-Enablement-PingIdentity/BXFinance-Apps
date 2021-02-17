@@ -198,7 +198,7 @@ class ModalLoginPassword extends React.Component {
 
       switch (tab) { // Each case corresponds to a tab pane in the UI.
         case "1":
-          // Usernmae/password form. This is the default state for the component. Will probably never be called from here.
+          // Username/password form. This is the default state for the component. Will probably never be called from here.
           this.toggleTab("1");
           break;
         case "2":
