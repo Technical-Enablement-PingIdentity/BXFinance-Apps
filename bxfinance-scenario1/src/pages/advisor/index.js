@@ -1,26 +1,17 @@
 // Packages
 import React from 'react';
 import {
-  Button, Jumbotron, Row, Col, Card, CardBody,
-  Collapse,
+  Button, Row, Col, Card, CardBody,
   Container,
-  Navbar,
-  NavbarToggler,
-  Nav,
-  NavItem,
-  NavLink,
   Media,
   Table,
   CustomInput
 } from 'reactstrap';
-import { Link, NavLink as RRNavLink, useHistory } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLinkedinIn, faFacebookF, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { useHistory } from 'react-router-dom';
 
 // Components
 import NavbarMain from '../../components/NavbarMain';
 import FooterMain from '../../components/FooterMain';
-import AccountsSubnav from '../../components/AccountsSubnav';
 import Session from '../../components/Utils/Session'; /* PING INTEGRATION: */
 import PingData from '../../components/Integration/PingData'; /* PING INTEGRATION: */
 import JSONSearch from '../../components/Utils/JSONSearch'; /* PING INTEGRATION: */
@@ -102,7 +93,7 @@ const SearchAutocomplete = () => {
           displaySuggestions={displaySuggestions}
           suggestions={filteredSuggestions}
         />
-        <img src={window._env_.PUBLIC_URL + "/images/icons/search.svg"} className="img-search" />
+        <img src={window._env_.PUBLIC_URL + "/images/icons/search.svg"} className="img-search" alt='' />
       </form>
     </div>
   );
@@ -212,13 +203,13 @@ class Advisor extends React.Component {
                           </thead>
                           <tbody>
                             {data.table_data.map((item, i) => {
-                              var id = i++;
                               return (
                                 <tr key={i}>
                                   <td className="text-info pl-4">{item.name}</td>
                                   <td className="text-center"><CustomInput type="checkbox" id={i} checked={item.active} /></td>
                                   <td className="text-center">{item.date_contacted}</td>
                                   <td className="text-center">{item.portfolio}</td>
+                                  { /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
                                   <td><a href="#"><small>Modify</small></a></td>
                                 </tr>
                               );
