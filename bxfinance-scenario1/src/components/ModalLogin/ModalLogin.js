@@ -81,7 +81,7 @@ class ModalLogin extends React.Component {
     /* BEGIN PING INTEGRATION: calling from NavbarMain upon return.
     Can't call toggleTab or we'll end up in endless loop. */
     //TODO better explanation needs to be here. WTF?
-    if (tab == '4') {
+    if (tab === '4') {
       this.setState({
         activeTab: tab
       });
@@ -169,9 +169,9 @@ class ModalLogin extends React.Component {
     if (window.location.search) {/* TODO what do we do if they submit with no querystring? Is that even possible? If not, do we even need the test for window.location.search??? */
       let payload = "";
 
-      switch (tab) {
+      switch (tab) { // Each case corresponds to a tab pane in the UI. 
         case "1":
-          // IDF form. This is the default state. Will probably never be called from here.
+          // IDF form. This is the default state for the component. Will probably never be called from here.
           this.toggleTab("1");
           break;
         case "2":
