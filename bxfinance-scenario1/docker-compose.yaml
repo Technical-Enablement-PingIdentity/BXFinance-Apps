@@ -8,8 +8,6 @@
 version: '3.3'
 services:
     BXFinance:
-        environment:
-            - REACT_APP_ENV=POC
         ports:
             - '5000:5000'
         image: 'bxfinanceapp:edge' # Tag options are qa, stage, prod.

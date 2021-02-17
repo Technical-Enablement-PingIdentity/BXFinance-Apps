@@ -26,9 +26,9 @@ COPY ./env.sh .
 COPY ./.env .
 
 # Add bash - not included with Alpine-based images
-#RUN apk add --no-cache bash
+RUN apk add --no-cache bash
 
 # Make our shell script executable
-#RUN chmod +x env.sh
+RUN chmod +x env.sh
 
-CMD ["sh", "-c", "/usr/share/nginx/html/app/env.sh && nginx -g \"daemon off;\""]
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/app/env.sh && nginx -g \"daemon off;\""]
