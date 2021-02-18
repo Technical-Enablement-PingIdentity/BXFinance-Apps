@@ -123,12 +123,9 @@ class ModalLoginPassword extends React.Component {
         return element.includes(deviceSelection);
       });
       
-      deviceId = deviceList[deviceRefIndex][1];
+      deviceId = event.target.getAttribute("did");
     }
 
-    deviceRefIndex = deviceList.findIndex((element, index) => {
-      return element.includes(deviceSelection);
-    });
     target = deviceList[deviceRefIndex][2];
     name = deviceList[deviceRefIndex][3];
 
@@ -139,7 +136,7 @@ class ModalLoginPassword extends React.Component {
         loginMethod: deviceSelection,
         deviceName: name,
         loginMethodUnset: false,
-        loginMethodFormGroupClass: 'form-group-light' //Doubt we need this. Was probably T3 placeholder since they didn't know how we would Implement Ping integration.
+        loginMethodFormGroupClass: 'form-group-light'
       }
     });
     /* END PING INTEGRATION: */
@@ -408,15 +405,26 @@ class ModalLoginPassword extends React.Component {
                 <TabPane tabId="2"> {/* Device/login selection. */}
                   <h4>{data.titles.login_method}</h4>
                   <FormGroup className={this.state.loginMethodFormGroupClass}>
-                    <div>{/* BEGIN PING INTEGRATION */}
-                      {this.deviceExists("iPhone") &&
-                        <CustomInput type="radio" id="login_method_iPhone" name="login_method" label={data.form.fields.login_method.options.faceid} className="form-check-inline" onClick={this.setLoginMethod.bind(this)} />}
-                      {/* NOT SUPPORTING THIS FOR DEMOS {this.deviceExists("TOTP") &&
-                        <CustomInput type="radio" id="login_method_TOTP" name="login_method" label={data.form.fields.login_method.options.totp} className="form-check-inline" onClick={this.setLoginMethod.bind(this)} />} */}
-                      {this.deviceExists("SMS") &&
-                        <CustomInput type="radio" id="login_method_SMS" name="login_method" label={data.form.fields.login_method.options.text} className="form-check-inline" onClick={this.setLoginMethod.bind(this)} />}
-                      {this.deviceExists("Email") &&
-                        <CustomInput type="radio" id="login_method_Email" name="login_method" label={data.form.fields.login_method.options.email} className="form-check-inline" onClick={this.setLoginMethod.bind(this)} />}
+                    <div>{/* BEGIN PING INTEGRATION: this switch/case could be reduced to a single line return, dynamically building the CustomInput tag. Demo 80/20 rule. */}
+                      {this.state.deviceList.map((device, idx) => {
+                        switch (device[0]) {
+                          case "iPhone":
+                            return <CustomInput key={idx} type="radio" did={device[1]} id={idx + "_login_method_iPhone"} name="login_method" label={data.form.fields.login_method.options.faceid} className="form-check-inline" onClick={this.setLoginMethod.bind(this)}><br />{device[3]}</CustomInput>
+                            break;
+                          case "SMS":
+                            return <CustomInput key={idx} type="radio" did={device[1]} id={idx + "_login_method_SMS"} name="login_method" label={data.form.fields.login_method.options.text} className="form-check-inline" onClick={this.setLoginMethod.bind(this)}><br />{device[2]}</CustomInput>
+                            break;
+                          case "Email":
+                            return <CustomInput key={idx} type="radio" did={device[1]} id={idx + "_login_method_Email"} name="login_method" label={data.form.fields.login_method.options.email} className="form-check-inline" onClick={this.setLoginMethod.bind(this)}><br />{device[2]}</CustomInput>
+                            break;
+                          case "TOTP":
+                            //This is currently not supported for BXF demos. No demand yet.
+                            //I.e. Google Authenticator, MS Authenticator, etc.
+                            // return <CustomInput key={idx} type="radio" did={device[1]} id={idx + "_login_method_TOTP"} name="login_method" label={data.form.fields.login_method.options.totp} className="form-check-inline" onClick={this.setLoginMethod.bind(this)}<br />{device[2]}</CustomInput>
+                            console.warn("Unsupported Device", "For this BX demo, we decided not to support TOTP devices; Google Authenticator, MS Authenticator, etc.");
+                            break;
+                        }
+                      })}
                     </div>{/* END PING INTEGRATION */}
                   </FormGroup>
                   <div className="mb-4 text-center">
