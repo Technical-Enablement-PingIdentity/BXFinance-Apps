@@ -335,7 +335,7 @@ class ModalLogin extends React.Component {
                       {this.state.deviceList.map((device, idx) => {
                         switch(device[0]) {
                           case "iPhone" :
-                            return <CustomInput key={idx} type="radio" did={device[1]} id={idx+"_login_method_iPhone"} name="login_method" label={data.form.fields.login_method.options.faceid} className="form-check-inline" onClick={this.setLoginMethod.bind(this)}><br />{device[3]}</CustomInput>
+                            return <CustomInput key={idx} type="radio" did={device[1]} id={idx+"_login_method_iPhone"} name="login_method" label={data.form.fields.login_method.options.faceid} className="form-check-inline" onClick={this.setLoginMethod.bind(this)}><br />{device[3] ? device[3] : device[0]}</CustomInput>
                           break;
                           case "SMS":
                             return <CustomInput key={idx} type="radio" did={device[1]} id={idx + "_login_method_SMS"} name="login_method" label={data.form.fields.login_method.options.text} className="form-check-inline" onClick={this.setLoginMethod.bind(this)}><br />{device[2]}</CustomInput>
