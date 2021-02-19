@@ -154,7 +154,7 @@ class NavbarMain extends React.Component {
               //pop the ID first modal. 
               this.refs.modalLogin.toggle();
             } else if (jsonResult.status === "FAILED") {
-              this.refs.modalError.toggle("Authentication", jsonResult.userMessage);
+              this.refs.modalError.toggle(jsonResult.message, jsonResult.userMessage);
             } //TODO if we have to handle ID first skipping identifier_required status, add it here.
           })
           .catch(error => console.error('HANDLESUBMIT ERROR', error));
