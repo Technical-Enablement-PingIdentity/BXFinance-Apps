@@ -20,10 +20,12 @@
     <meta 
       http-equiv="Content-Security-Policy" 
       content="default-src 'self'; style-src 'self' 'unsafe-inline' fonts.googleapis.com use.typekit.net p.typekit.net; font-src 'self' use.typekit.net fonts.gstatic.com data:; 
-      script-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src 'self'; form-action 'self'; connect-src 'self' https://babbtx-aspsp.herokuapp.com/;" />
+      script-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src 'self'; form-action 'self'; connect-src 'self' https://babbtx-aspsp.herokuapp.com/ https://staging-babbtx-aspsp.herokuapp.com/;" />
     <meta 
       name="author"
       content="Technical Enablement - Ping Identity" />
+    <!-- Script for runtime environment variables injected by Docker builds -->
+    <script src="%PUBLIC_URL%/env-config.js"></script>
       <!-- END PING INTEGRATIONS -->
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--

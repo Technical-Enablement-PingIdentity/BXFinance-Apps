@@ -2,24 +2,14 @@
 import React from 'react';
 import { withRouter } from "react-router"; /* PING INTEGRATION: */
 import {
-  Button, Jumbotron, Row, Col, Card, CardBody,
-  Collapse,
+  Button, Row, Col, Card, CardBody,
   Container,
-  Navbar,
-  NavbarToggler,
-  Nav,
-  NavItem,
-  NavLink,
   Media
 } from 'reactstrap';
-import { Link, NavLink as RRNavLink, useLocation } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLinkedinIn, faFacebookF, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 // Components
 import NavbarMain from '../../components/NavbarMain';
 import FooterMain from '../../components/FooterMain';
-import AccountsSubnav from '../../components/AccountsSubnav';
 import Session from '../../components/Utils/Session'; /* PING INTEGRATION: */
 import PingData from '../../components/Integration/PingData'; /* PING INTEGRATION: */
 import JSONSearch from '../../components/Utils/JSONSearch'; /* PING INTEGRATION: */
@@ -151,7 +141,7 @@ const SearchAutocomplete = (props) => {
           displaySuggestions={displaySuggestions}
           suggestions={filteredSuggestions}
         />
-        <img src={process.env.PUBLIC_URL + "/images/icons/search.svg"} className="img-search" />
+        <img src={window._env_.PUBLIC_URL + "/images/icons/search.svg"} className="img-search" alt='' />
       </form>
     </div>
   );
@@ -236,7 +226,7 @@ class AdvisorClient extends React.Component {
                   <CardBody>
                     <Media>
                       <Media left href="#">
-                        <Media object src={process.env.PUBLIC_URL + "/images/anywealthadvisor-photo.png"} alt="Generic placeholder image" />
+                        <Media object src={window._env_.PUBLIC_URL + "/images/anywealthadvisor-photo.png"} alt="Generic placeholder image" />
                       </Media>
                       <Media body>
                         <span dangerouslySetInnerHTML={{ __html: data.profile.advisor.content }}></span>
@@ -290,17 +280,17 @@ class AdvisorClient extends React.Component {
                             </Col>
                             <Col md="8" className="col-content">
                               <p><strong>{data.client_detail.content.title}</strong></p>
-                              {this.state.acct_0 != 0 &&
+                              {this.state.acct_0 !== 0 &&
                                 <Row key={0}>
                                   <Col md="8">BXFinance Checking (Account 1)</Col>
                                   <Col md="4">{this.state.acct_0}</Col>
                                 </Row>}
-                              {this.state.acct_1 != 0 &&
+                              {this.state.acct_1 !== 0 &&
                                 <Row key={1}>
                                   <Col md="8">BXFinance Savings (Account 1)</Col>
                                   <Col md="4">{this.state.acct_1}</Col>
                                 </Row>}
-                              {this.state.acct_2 != 0 &&
+                              {this.state.acct_2 !== 0 &&
                                 <Row key={2}>
                                   <Col md="8">BXFinance Savings (Account 2)</Col>
                                   <Col md="4">{this.state.acct_2}</Col>
@@ -315,11 +305,11 @@ class AdvisorClient extends React.Component {
                               <Row>
                                 <Col md="8">
                                   <p><strong>{data.client_detail.content.portfolio_overview}</strong></p>
-                                  <img src={process.env.PUBLIC_URL + "/images/advisor-client-chart.png"} className="img-fluid" />
+                                  <img src={window._env_.PUBLIC_URL + "/images/advisor-client-chart.png"} className="img-fluid" alt='Portfolio Overview'/>
                                 </Col>
                                 <Col md="4">
                                   <p><strong>{data.client_detail.content.portfolio_view}</strong></p>
-                                  <img src={process.env.PUBLIC_URL + "/images/advisor-client-pie-chart.png"} className="img-fluid" />
+                                  <img src={window._env_.PUBLIC_URL + "/images/advisor-client-pie-chart.png"} className="img-fluid" alt='Portfolio View'/>
                                 </Col>
                               </Row>
                             </Col>

@@ -35,19 +35,19 @@ class Session {
            switch (userType) {
                case "AnyWealthAdvisor":
                    if (!advisorAllowedPaths.includes(path)) {
-                       console.info("Access Rule", "Attempt to access disallowed path for user type " + userType + ". Redirecting to default.");
+                       console.info("Access Rule", "Attempt to access disallowed resource for user type " + userType + ". Redirecting to default.");
                        window.location.assign(advisorAllowedPaths[0]);
                    }
                    break;
                case "AnyMarketing":
                    if (!marketingAllowedPaths.includes(path)) {
-                       console.info("Access Rule", "Attempt to access disallowed path for user type " + userType + ". Redirecting to default.");
+                       console.info("Access Rule", "Attempt to access disallowed resource for user type " + userType + ". Redirecting to default.");
                        window.location.assign(marketingAllowedPaths[0]);
                    }
                    break;
                case "customer":
                    if (advisorAllowedPaths.includes(path) || marketingAllowedPaths.includes(path)) {
-                       console.info("Access Rule", "Attempt to access disallowed path for user type " + userType + ". Redirecting to default.");
+                       console.info("Access Rule", "Attempt to access disallowed resource for user type " + userType + ". Redirecting to default.");
                        window.location.assign("/banking"); //Default for a logged in user
                    }
                    break;
@@ -65,7 +65,7 @@ class Session {
     @return {string} DOM String.
     */
     getAuthenticatedUserItem(key) {
-        console.info("Session.js", "Getting a item from local browser session.");
+        console.info("Session.js", "Getting " + key + " from local browser session.");
 
         return sessionStorage.getItem(key);
     }
@@ -86,7 +86,7 @@ class Session {
                                 using separate data containers.)
     */
     setAuthenticatedUserItem(key, value) {
-        console.info("Session.js", "Saving an item into local browser session.");
+        console.info("Session.js", "Saving " + key + " into local browser session.");
 
         sessionStorage.setItem(key, value);
         return true;
@@ -100,7 +100,7 @@ class Session {
     @return {boolean} Success state of item removal from storage.
     */
     removeAuthenticatedUserItem(key) {
-        console.info("Session.js", "Removing an item from local browser session.");
+        console.info("Session.js", "Removing " + key + " from local browser session.");
 
         sessionStorage.removeItem(key);
         return true;

@@ -61,7 +61,7 @@ class AccountsTransfer extends React.Component {
         this.OpenBanking.transferMoney(this.state.xfrAmount, this.Session.getAuthenticatedUserItem("AT"))
           .then(response => response.json())
           .then(jsonData => {
-            if (jsonData.status == "Money Transferred!") {
+            if (jsonData.status === "Money Transferred!") {
               this.setState({ step: 3 });
             } else {
               this.setState({ step: 4 }); //TODO this needs to be error modal.
@@ -76,7 +76,7 @@ class AccountsTransfer extends React.Component {
         this.OpenBanking.transferMoney(this.state.xfrAmount, this.Session.getAuthenticatedUserItem("AT"))
           .then(response => response.json())
           .then(jsonData => {
-            if (jsonData.status == "Money Transferred!") {
+            if (jsonData.status === "Money Transferred!") {
               this.setState({ step: 3 });
             } else {
               this.setState({ 
@@ -133,7 +133,7 @@ class AccountsTransfer extends React.Component {
                 <h1>{data.title}</h1>
                 <AccountsDropdown text={data.dropdown} />
               </div>
-              {this.state.step == 1 &&
+              {this.state.step === 1 &&
                 <div className="transfer-step transfer-step1">
                   <Form>
                     <Row>
@@ -180,7 +180,7 @@ class AccountsTransfer extends React.Component {
                     </Row>
                     <Row className="submit-buttons">
                       <Col md={12} className="text-right">
-                        {/* <a href={process.env.PUBLIC_URL} className="text-info cancel">{data.form.buttons.cancel.label}</a> */}
+                        {/* <a href={window._env_.PUBLIC_URL} className="text-info cancel">{data.form.buttons.cancel.label}</a> */}
                         <Link to="/banking" className="text-info cancel">{data.form.buttons.cancel.label}</Link>
                         <Button color="primary" className="start-transfer" onClick={this.showStep2}>{data.form.buttons.start_transfer.label}</Button> {/* PING INTEGRATION: onClick handler here */}
                       </Col>
@@ -189,7 +189,7 @@ class AccountsTransfer extends React.Component {
                 </div>
               }
 
-              {this.state.step == 2 &&
+              {this.state.step === 2 &&
                 <div className="transfer-step transfer-step2">
                   <h2>Okay, let&rsquo;s confirm:</h2>
                   <div className="table">
@@ -207,15 +207,15 @@ class AccountsTransfer extends React.Component {
                     </div>
                   </div>
                   <div className="app-approval-banner">
-                    <img src={process.env.PUBLIC_URL + "/images/icons/phone.jpg"} className="img-phone" alt="phone" />
+                    <img src={window._env_.PUBLIC_URL + "/images/icons/phone.jpg"} className="img-phone" alt="phone" />
                     <h3>Requires your approval:</h3>
                     <p>This transaction will take place after you approve it using your BXFinance app on iPhone. <a>What is this?</a></p>
-                    <img src={process.env.PUBLIC_URL + "/images/app-store-logos.svg"} className="app-store-logos" />
+                    <img src={window._env_.PUBLIC_URL + "/images/app-store-logos.svg"} className="app-store-logos" alt='App Store'/>
                   </div>
                   <Form>
                     <Row className="submit-buttons">
                       <Col md={12} className="text-right">
-                        <a href={process.env.PUBLIC_URL} className="text-info cancel">{data.form.buttons.cancel.label}</a>
+                        <a href={window._env_.PUBLIC_URL} className="text-info cancel">{data.form.buttons.cancel.label}</a>
                         <Button color="primary" className="start-transfer" onClick={this.showStep3}>{data.form.buttons.pending_transfer.label}</Button>
                       </Col>
                     </Row>
@@ -223,7 +223,7 @@ class AccountsTransfer extends React.Component {
                 </div>
               }
 
-              {this.state.step == 3 &&
+              {this.state.step === 3 &&
                 <div className="transfer-step transfer-step3">
                   <h2>Transfer Confirmed</h2>
                   <div className="table">
@@ -242,7 +242,7 @@ class AccountsTransfer extends React.Component {
                   <Form>
                     <Row className="submit-buttons">
                       <Col md={12} className="text-right">
-                        {/* <a href={process.env.PUBLIC_URL} className="text-link cancel">{data.form.buttons.close.label}</a> */}
+                        {/* <a href={window._env_.PUBLIC_URL} className="text-link cancel">{data.form.buttons.close.label}</a> */}
                         <Link to="/banking/pay-and-transfer" className="text-link cancel">{data.form.buttons.close.label}</Link>
                         <Button color="primary" className="start-transfer" onClick={this.showStep1}>{data.form.buttons.start_new_transfer.label}</Button>
                       </Col>
@@ -252,7 +252,7 @@ class AccountsTransfer extends React.Component {
               }
 
               {/* BEGIN PING INTEGRATION: Transfer denied display we never got. */}
-              {this.state.step == 4 &&
+              {this.state.step === 4 &&
                 <div className="transfer-step transfer-step3">
                   <h2>Transfer Denied</h2>
                   <div className="table">
@@ -270,7 +270,7 @@ class AccountsTransfer extends React.Component {
                   <Form>
                     <Row className="submit-buttons">
                       <Col md={12} className="text-right">
-                        {/* <a href={process.env.PUBLIC_URL} className="text-link cancel">{data.form.buttons.close.label}</a> */}
+                        {/* <a href={window._env_.PUBLIC_URL} className="text-link cancel">{data.form.buttons.close.label}</a> */}
                         <Link to="/banking/pay-and-transfer" className="text-link cancel">{data.form.buttons.close.label}</Link>
                         <Button color="primary" className="start-transfer" onClick={this.showStep1}>{data.form.buttons.start_new_transfer.label}</Button>
                       </Col>

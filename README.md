@@ -1,6 +1,9 @@
 # BXFinance-Apps
 Single page application (SPA) built with React; JSX, ECMAscript 2017, react-router, react-strap, SASS, JSON.
 
+# IMPORTANT
+BXFinance was built on react-script version 3.4.3. Do NOT update to react-scripts version 4.0.1. Despite the warning of a prototype pollution vulnerability, the update to v4.0.1 has a breaking change related to the same package that has the vulnerability. This breaking change prevents compilation of the project.
+
 ## Points of Interest
 
 ### Cloning BXFinance and running the app

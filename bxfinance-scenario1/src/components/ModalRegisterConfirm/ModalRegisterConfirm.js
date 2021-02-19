@@ -39,12 +39,12 @@ class ModalRegisterConfirm extends React.Component {
               <Col lg="6" xl="4" className="col-download">
                 <h4>{data.download.title}</h4>
                 <p dangerouslySetInnerHTML={{__html: data.download.content}}></p>
-                <div className="mb-3"><img src={process.env.PUBLIC_URL + "/images/app-store-logos.svg"} /></div>
+                <div className="mb-3"><img src={window._env_.PUBLIC_URL + "/images/app-store-logos.svg"} alt=''/></div>
                 <p dangerouslySetInnerHTML={{__html: data.download.learn}}></p>
-                <img src={process.env.PUBLIC_URL + "/images/device-with-logo.png"} alt="device" className="device-with-logo" />
+                <img src={window._env_.PUBLIC_URL + "/images/device-with-logo.png"} alt="device" className="device-with-logo" />
               </Col>
               <Col lg="6" xl="8" className="col-content">
-                <img src={process.env.PUBLIC_URL + "/images/logo.svg"} alt="logo" />
+                <img src={window._env_.PUBLIC_URL + "/images/logo.svg"} alt="logo" />
                 <h4>{data.confirmation.title}</h4>
                 <div dangerouslySetInnerHTML={{__html: data.confirmation.content}}></div>
                 <div className="mt-4">

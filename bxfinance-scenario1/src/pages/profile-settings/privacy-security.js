@@ -246,7 +246,7 @@ class PrivacySecurity extends React.Component {
                 <AccountsDropdown text={data.dropdown} />
               </div>
               <div className="module">
-                {this.state.step == 1 &&
+                {this.state.step === 1 &&
                   <div className="edit">
                     <h2>{data.steps[0].title}</h2>
                     <p>{data.steps[0].description}</p>
@@ -255,7 +255,7 @@ class PrivacySecurity extends React.Component {
                       <Container>
                         <div>
                           <Row>
-                            <Col md={12} lg={4}><img src={process.env.PUBLIC_URL + partner1.logo} alt="" /></Col>
+                            <Col md={12} lg={4}><img src={window._env_.PUBLIC_URL + partner1.logo} alt="" /></Col>
                             <Col md={12} lg={4}>
                               <CustomInput type="radio" id={`${partner1.name}_yes`} name={partner1.name} label="Yes" />
                               <CustomInput type="radio" id={`${partner1.name}_no`} readOnly checked name={partner1.name} label="No" />
@@ -265,7 +265,7 @@ class PrivacySecurity extends React.Component {
                         </div>
                         <div>
                           <Row className="gray">
-                            <Col md={12} lg={4}><img src={process.env.PUBLIC_URL + partner2.logo} alt="" /></Col>
+                            <Col md={12} lg={4}><img src={window._env_.PUBLIC_URL + partner2.logo} alt="" /></Col>
                             <Col md={12} lg={4}>
                               <CustomInput type="radio" id={`${partner2.name}_yes`} name={partner2.name} label="Yes" />
                               <CustomInput type="radio" id={`${partner2.name}_no`} readOnly checked name={partner2.name} label="No" />
@@ -276,7 +276,7 @@ class PrivacySecurity extends React.Component {
                         {/* PING INTEGRATION: This block "partner3" is only partner block modified for demos. The others are static.  */}
                         <div>
                           <Row>
-                            <Col md={12} lg={4}><img src={process.env.PUBLIC_URL + partner3.logo} alt="" /></Col>
+                            <Col md={12} lg={4}><img src={window._env_.PUBLIC_URL + partner3.logo} alt="" /></Col>
                             <Col md={12} lg={4}>
                               <CustomInput type="radio" id={`${partner3.name}_yes`} checked={this.state[partner3.name]} name={partner3.name} label="Yes" onClick={this.toggle} />
                               <CustomInput type="radio" id={`${partner3.name}_no`} checked={!this.state[partner3.name]} name={partner3.name} label="No" onClick={this.toggle} />
@@ -322,7 +322,7 @@ class PrivacySecurity extends React.Component {
                     </Form>
                   </div>
                 }
-                {this.state.step == 2 &&
+                {this.state.step === 2 &&
                   <div className="confirmation">
                     <h3>{data.steps[1].title}</h3>
                     <p>{data.steps[1].description}</p>
@@ -337,10 +337,10 @@ class PrivacySecurity extends React.Component {
                                   const permission = data.steps[1].partners[index].permissions[index2];
                                   isChecked = this.state.consentedAccts.indexOf(this.state["acct_" + index2]) > -1 ? true : false;
                                   return (
-                                    <FormGroup check>
+                                    <FormGroup key={index2} check>
                                       <Label className="custom-checkbox" check>
                                         <Input type="checkbox" checked={isChecked} disabled /> {permission.label}
-                                        <span class="checkmark"><span></span></span>
+                                        <span className="checkmark"><span></span></span>
                                       </Label>
                                     </FormGroup>
                                   )
