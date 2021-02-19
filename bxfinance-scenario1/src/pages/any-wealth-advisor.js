@@ -222,7 +222,7 @@ class AnyWealthAdvisor extends React.Component {
                           {item.children.map((item, i) => {
                             return (
                               <NavItem key={i}>
-                                <NavLink href={item.url}>{item.title}</NavLink>
+                                <NavLink target="_blank" href={item.url}>{item.title}</NavLink>
                               </NavItem>
                             );
                           })}
