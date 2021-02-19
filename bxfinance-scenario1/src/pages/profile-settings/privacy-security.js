@@ -337,10 +337,10 @@ class PrivacySecurity extends React.Component {
                                   const permission = data.steps[1].partners[index].permissions[index2];
                                   isChecked = this.state.consentedAccts.indexOf(this.state["acct_" + index2]) > -1 ? true : false;
                                   return (
-                                    <FormGroup check>
+                                    <FormGroup key={index2} check>
                                       <Label className="custom-checkbox" check>
                                         <Input type="checkbox" checked={isChecked} disabled /> {permission.label}
-                                        <span class="checkmark"><span></span></span>
+                                        <span className="checkmark"><span></span></span>
                                       </Label>
                                     </FormGroup>
                                   )
