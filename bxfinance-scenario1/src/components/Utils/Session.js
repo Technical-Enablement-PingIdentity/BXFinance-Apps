@@ -35,19 +35,19 @@ class Session {
            switch (userType) {
                case "AnyWealthAdvisor":
                    if (!advisorAllowedPaths.includes(path)) {
-                       console.info("Access Rule", "Attempt to access disallowed path for user type " + userType + ". Redirecting to default.");
+                       console.info("Access Rule", "Attempt to access disallowed resource for user type " + userType + ". Redirecting to default.");
                        window.location.assign(advisorAllowedPaths[0]);
                    }
                    break;
                case "AnyMarketing":
                    if (!marketingAllowedPaths.includes(path)) {
-                       console.info("Access Rule", "Attempt to access disallowed path for user type " + userType + ". Redirecting to default.");
+                       console.info("Access Rule", "Attempt to access disallowed resource for user type " + userType + ". Redirecting to default.");
                        window.location.assign(marketingAllowedPaths[0]);
                    }
                    break;
                case "customer":
                    if (advisorAllowedPaths.includes(path) || marketingAllowedPaths.includes(path)) {
-                       console.info("Access Rule", "Attempt to access disallowed path for user type " + userType + ". Redirecting to default.");
+                       console.info("Access Rule", "Attempt to access disallowed resource for user type " + userType + ". Redirecting to default.");
                        window.location.assign("/banking"); //Default for a logged in user
                    }
                    break;
