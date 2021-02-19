@@ -246,7 +246,7 @@ class PrivacySecurity extends React.Component {
                 <AccountsDropdown text={data.dropdown} />
               </div>
               <div className="module">
-                {this.state.step == 1 &&
+                {this.state.step === 1 &&
                   <div className="edit">
                     <h2>{data.steps[0].title}</h2>
                     <p>{data.steps[0].description}</p>
@@ -322,7 +322,7 @@ class PrivacySecurity extends React.Component {
                     </Form>
                   </div>
                 }
-                {this.state.step == 2 &&
+                {this.state.step === 2 &&
                   <div className="confirmation">
                     <h3>{data.steps[1].title}</h3>
                     <p>{data.steps[1].description}</p>
