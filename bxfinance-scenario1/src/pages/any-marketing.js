@@ -219,7 +219,7 @@ class AnyMarketing extends React.Component {
     this.Session.protectPage(isLoggedOut, window.location.pathname, this.Session.getAuthenticatedUserItem("bxFinanceUserType"));
     this.setState({ loggedOut: isLoggedOut});
     // Getting users from PD.
-    this.PingData.getSearchableUsers({})
+    this.PingData.getSearchableUsers({limit: "1000"})
       .then(response => response.json())
       .then(jsonSearchResults => {
         // Get an array of just uid's from the results.

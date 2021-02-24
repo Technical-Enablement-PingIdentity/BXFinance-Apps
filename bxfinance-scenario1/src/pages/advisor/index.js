@@ -111,7 +111,7 @@ class Advisor extends React.Component {
   /* BEGIN PING INTEGRATION: */
   componentDidMount() {
     // Getting searchable users from PD.
-    this.PingData.getSearchableUsers({})
+    this.PingData.getSearchableUsers({limit: "1000"})
       .then(response => response.json())
       .then(jsonSearchResults => {
         // Get an array of just uid's from the results.
