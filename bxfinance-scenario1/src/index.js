@@ -13,6 +13,7 @@ import AnyWealthAdvisor from './pages/any-wealth-advisor';
 import Advisor from './pages/advisor/index';
 import AdvisorClient from './pages/advisor/client';
 import AnyMarketing from './pages/any-marketing';
+import Application from './pages/credit-card/application';
 import * as serviceWorker from './serviceWorker';
 
 const routing = (
@@ -47,6 +48,9 @@ const routing = (
       </Route>
       <Route path="/any-marketing">
         <AnyMarketing />
+      </Route>
+      <Route path="/credit-card">
+        <Application />
       </Route>
       <Route path="/">
         <Home />
