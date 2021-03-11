@@ -14,6 +14,8 @@ echo "window._env_ = {" >> ./env-config.js
 # Each line represents key=value pairs
 while read -r line || test -n "${line}"
 do
+  #Only continue if the current line is not a comment "#".
+  [[ ${line} =~ ^#.* ]] && continue
   # Split env variables by character `=`
   if printf '%s\n' "${line}" | grep -q -e '='
   then
