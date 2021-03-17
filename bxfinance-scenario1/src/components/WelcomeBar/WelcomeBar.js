@@ -12,7 +12,7 @@ const WelcomeBar = (props) => {
       <Container>
         <Row>
           <Col lg="12">
-            <p>Welcome{props.firstName && ", "+props.firstName}</p> {/* PING INTEGRATION: added use of props. */}
+            <p>{props.welcomeMessage || "Welcome"}{props.firstName && ", "+props.firstName}</p> {/* PING INTEGRATION: added use of props. */}
           </Col>
         </Row>
       </Container>
