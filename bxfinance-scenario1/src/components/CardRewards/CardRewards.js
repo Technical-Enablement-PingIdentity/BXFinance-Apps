@@ -10,13 +10,16 @@ import data from './data.json';
 
 class CardRewards extends React.Component {
   render() {
+    const pathName=window.location.pathname;
     return (
       <div>
         <Card className="card-rewards">
           <CardBody>
             <CardTitle tag="h3">{data.title}</CardTitle>
             <CardText>{data.content}</CardText>
-            <CardLink href={window._env_.PUBLIC_URL + "/credit-card"} target="_blank">{data.button}</CardLink>
+            { /* Don't show 'Apply Today' link on the home page. Must be logged in to apply. */ }
+            { (!(pathName == "/app/") && !(pathName == "/app")) && 
+            <CardLink href={window._env_.PUBLIC_URL + "/credit-card"} target="_blank">{data.button}</CardLink> }
           </CardBody>
           <img src={window._env_.PUBLIC_URL + "/images/home-hero-card.png"} className="img-credit-card" alt="card" />
         </Card>
