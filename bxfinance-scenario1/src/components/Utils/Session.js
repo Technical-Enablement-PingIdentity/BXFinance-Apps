@@ -25,12 +25,17 @@ class Session {
        const advisorAllowedPaths = ["/app/advisor", "/app/advisor/client", "/app/advisor/tracking", "/app/advisor/prospecting", "/app/advisor/other-services"];
        const marketingAllowedPaths = ["/app/any-marketing", "/app/any-marketing/dashboard", "/app/any-marketing/client-profiles", "/app/any-marketing/tracking", "/app/any-marketing/equities-trading"];
        const homePaths = ["/app/", "/app"];
+       const startSSOURI = "/idp/startSSO.ping?PartnerSpId=" + window._env_.REACT_APP_HOST + "&TargetResource=" + window._env_.REACT_APP_HOST + "/app/credit-card";
+       const creditCardPath = "/app/credit-card";
        console.info("Session.js", "Checking access rules for type " + userType + " at " + path);
        
        //They have to be logged in to be anywhere other than home.
-       if (loggedOut && (!homePaths.includes(path))) {
-           console.info("Access rule", "Attempting to access protected page as unauthenticated user. Redirecting to home.")
-           window.location.assign(homePaths[0]);
+       if (loggedOut && path === creditCardPath) {
+           console.info("Access rule", "Attempting to access protected page as unauthenticated user. Starting SSO for credit-card.");
+           window.location.assign(startSSOURI);
+        } else if (loggedOut && (!homePaths.includes(path))) {
+            console.info("Access rule", "Attempting to access protected page as unauthenticated user. Redirecting to home.");
+            window.location.assign(homePaths[0]);
         } else {
            switch (userType) {
                case "AnyWealthAdvisor":
@@ -46,9 +51,9 @@ class Session {
                    }
                    break;
                case "customer":
-                   if (advisorAllowedPaths.includes(path) || marketingAllowedPaths.includes(path)) {
+                   if (advisorAllowedPaths.includes(path) || marketingAllowedPaths.includes(path) || homePaths.includes(path)) {
                        console.info("Access Rule", "Attempt to access disallowed resource for user type " + userType + ". Redirecting to default.");
-                       window.location.assign("/banking"); //Default for a logged in user
+                       window.location.assign("/app/banking"); //Default for a logged in user
                    }
                    break;
                default:
