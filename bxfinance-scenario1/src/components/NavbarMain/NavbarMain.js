@@ -47,7 +47,7 @@ class NavbarMain extends React.Component {
     
     this.startSSOURI = "/idp/startSSO.ping?PartnerSpId=" + window._env_.REACT_APP_HOST + "&TargetResource=" + window._env_.REACT_APP_HOST + "/app/banking"; //TODO this needs to be moved to ping-endpoints.json
     //The TargetResource param for registration is set to the startSSO endpoint to after reg we immediately trigger a login flow for better UX.
-    this.pfRegURI = "/sp/startSSO.ping?SpSessionAuthnAdapterId=idprofiledefaultIdentityProfile&TargetResource=" + window._env_.REACT_APP_HOST + this.startSSOURI + "&PolicyAction=identity.registration";
+    this.pfRegURI = "/sp/startSSO.ping?SpSessionAuthnAdapterId=idprofiledefaultIdentityProfile&TargetResource=" + window._env_.REACT_APP_HOST + this.startSSOURI + "&PolicyAction=identity.registration&TargetResource=" + window._env_.REACT_APP_HOST + "/app/banking";
     /* END PING INTEGRATION: */
   }
 
@@ -155,7 +155,7 @@ class NavbarMain extends React.Component {
               this.refs.modalLogin.toggle();
             } else if (jsonResult.status === "FAILED") {
               this.refs.modalError.toggle(jsonResult.message, jsonResult.userMessage);
-            } //TODO if we have to handle ID first skipping identifier_required status, add it here.
+            }
           })
           .catch(error => console.error('HANDLESUBMIT ERROR', error));
       } // Coming back as authenticated user from AIK or SLO request from Agentless IK.
