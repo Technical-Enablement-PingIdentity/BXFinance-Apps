@@ -7,6 +7,8 @@ authentication-related API endpoints.
 @author Michael Sanchez
 */
 
+/* eslint-disable no-useless-escape */
+
 class PingAuthN {
 
     // Didn't abstract these since they shouldn't ever change.
@@ -62,43 +64,35 @@ class PingAuthN {
                 console.info("PingAuthN.js", "IDENTIFIER_REQUIRED");
                 payload = '{\n  \"identifier\": \"' + body + '\"\n}';
                 return this.authnAPI({ method: "POST", flowId: flowResponse.id, contentType: "application/vnd.pingidentity.submitIdentifier+json", payload: payload });
-                break;
             case "USERNAME_PASSWORD_REQUIRED":
                 console.info("PingAuthN.js", "USERNAME_PASSWORD_REQUIRED");
                 payload = '{\n \"username\": \"' + flowResponse.username + '\", \"password\": \"' + swaprods + '\", \"rememberMyUsername\": \"' + rememberMe + '\", \"captchaResponse\": \"\" \n}';
                 return this.authnAPI({ method: "POST", flowId: flowResponse.id, contentType: "application/vnd.pingidentity.checkUsernamePassword+json", payload: payload });
-                break;
             case "AUTHENTICATION_REQUIRED":
                 console.info("PingAuthN.js", "AUTHENTICATION_REQUIRED");
                 payload = '{' + body + '}';
                 return this.authnAPI({ method: "POST", flowId: flowResponse.id, contentType: "application/vnd.pingidentity.authenticate+json", payload: payload });
-                break;
             case "DEVICE_SELECTION_REQUIRED":
                 console.info("PingAuthN.js", "DEVICE_SELECTION_REQUIRED");
                 payload = '{\n \"deviceRef\": {\n \"id\":\"' + body + '\" \n} \n}';
                 return this.authnAPI({ method: "POST", flowId: flowResponse.id, payload: payload, action: "selectDevice" });
-                break;
             case "OTP_REQUIRED":
                 console.info("PingAuthN.js", "OTP_REQUIRED");
                 payload = '{\n \"otp\": \"' + body + '\" \n}';
                 return this.authnAPI({ method: "POST", flowId: flowResponse.id, payload: payload, action: "checkOtp" });
-                break;
                 // this case is a placeholder for mobile push. Needs to be updated.
             case "PUSH_CONFIRMATION_WAITING":
                 console.info("PingAuthN.js", "fubar_REQUIRED");
                 return this.authnAPI({ method: "POST", flowId: flowResponse.id, action: "poll" });
-                break;
             case "MFA_COMPLETED":
                 console.info("PingAuthN.js", "MFA_COMPLETED");
                 payload = '{' + body + '}';
                 return this.authnAPI({ method: "POST", flowId: flowResponse.id, payload: payload, action: "continueAuthentication" });
-                break;
             case "DEVICE_PROFILE_REQUIRED":
                 console.info("PingAuthN.js", "DEVICE_PROFILE_REQUIRED");
                 console.info("Device Profile", body);
                 payload = body;
                 return this.authnAPI({ method: "POST", flowId: flowResponse.id, payload: payload, action: "submitDeviceProfile" });
-                break;
             case "RESUME":
                 console.info("PingAuthN.js", "Authentication complete. Redirecting to resumeURL.");
                 window.location.assign(flowResponse.resumeUrl);

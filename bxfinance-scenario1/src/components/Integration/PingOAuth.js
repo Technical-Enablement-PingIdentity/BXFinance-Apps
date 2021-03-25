@@ -31,7 +31,7 @@ class PingOAuth {
     @param {string} scopes Optional OAuth scopes. Default is an empty string.
     @return {string} AuthZ code.
     */
-    async getAuthCode({client = "pa_wam", responseType = "code", redirectURI = process.env.REACT_APP_HOST + "/app/banking", scopes = ""} = {}) {
+    async getAuthCode({client = "pa_wam", responseType = "code", redirectURI = window._env_.REACT_APP_HOST + "/app/banking", scopes = ""} = {}) {
         console.info("PingOAuth.js", "Getting an auth code for the getToken() call.");
 
         const myHeaders = new Headers();
@@ -67,10 +67,10 @@ class PingOAuth {
     @param {string} scopes Optional OAuth scopes. Default is an empty string.
     @return {string} OAuth access token, base64 encoded.
     */
-    async getToken({uid, client = "pa_wam", responseType = "code", redirectURI = process.env.REACT_APP_HOST + "/app/banking", scopes = ""} = {}) {
+    async getToken({uid, client = "pa_wam", responseType = "code", redirectURI = window._env_.REACT_APP_HOST + "/app/banking", scopes = ""} = {}) {
         console.info("PingOAuth.js", "Getting a token.");
 
-        if (responseType == "code") {
+        if (responseType === "code") {
             console.info("PingAuthN.js", "Using auth code grant");
             const authCode = await this.getAuthCode({uid:this.Session.getAuthenticatedUserItem("uid"), scopes:scopes});
             let grantType = "authorization_code";
@@ -92,7 +92,7 @@ class PingOAuth {
 
             return token; //TODO there should only be one return statement.
 
-        } else if (client == "marketingApp" || client == "anywealthadvisorApp") {
+        } else if (client === "marketingApp" || client === "anywealthadvisorApp") {
             console.info("PingAuthN.js", "Using client credentials grant");
             let grantType = "client_credentials";
             var myHeaders = new Headers();

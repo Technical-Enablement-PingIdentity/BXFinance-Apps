@@ -11,7 +11,7 @@ class PingData {
 
     // Didn't abstract these since they shouldn't ever change. Right??? Maybe move these to JSON data file?
     pdReSTURI = "/directory/v1/"; //TODO breakout the version segment to its own variable in case it changes.
-    pdRootDN = "dc=bxfinance.org";
+    pdRootDN = window._env_.REACT_APP_BASE_DN;
     pdPeopleRDN = 'ou=People,' + this.pdRootDN;
     pdConsentURI = "/consent";
     pdConsentVersion = "/v1";
@@ -35,7 +35,7 @@ class PingData {
         const userRDN = 'uid=' + encodeURIComponent(uid);
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Basic Y249ZG1hbmFnZXI6MkZlZGVyYXRlTTByZQ=="); /* TODO this should be obfuscated somehow. */
+        myHeaders.append("Authorization", "Basic Y249YWRtaW5pc3RyYXRvcjoyRmVkZXJhdGVNMHJl"); /* TODO this should be obfuscated somehow. */
 
         const requestOptions = {
             method: 'GET',
@@ -60,7 +60,7 @@ class PingData {
         const userRDN = 'uid=' + uid;
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Basic Y249ZG1hbmFnZXI6MkZlZGVyYXRlTTByZQ==");
+        myHeaders.append("Authorization", "Basic Y249YWRtaW5pc3RyYXRvcjoyRmVkZXJhdGVNMHJl");
 
         let updateObj = { "modifications": [{ "attributeName": "bxFinanceUserAccountIDs", "modificationType": "set", "values": [{ "ids": [] }] }] };
         updateObj.modifications[0].values[0].ids = acctIds;
@@ -94,7 +94,7 @@ class PingData {
         console.info("PingData.js", "Getting all searchable users (banking customers) from PD.");
 
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Basic Y249ZG1hbmFnZXI6MkZlZGVyYXRlTTByZQ==");
+        myHeaders.append("Authorization", "Basic Y249YWRtaW5pc3RyYXRvcjoyRmVkZXJhdGVNMHJl");
 
         var requestOptions = {
             method: 'GET',
@@ -102,7 +102,7 @@ class PingData {
             redirect: 'follow'
         };
         // TODO we need some attribute or way to filter user to only include ones created for demos.
-        const url = this.pdReSTURI + this.pdPeopleRDN + this.pdSubtreeResource + "searchScope=" + searchScope + "&limit=" + limit + "&filter=not(bxFinanceUserType pr)";
+        const url = this.pdReSTURI + this.pdPeopleRDN + this.pdSubtreeResource + "searchScope=" + searchScope + "&limit=" + limit + '&filter=bxFinanceUserAuthnPreferences pr';
 
         return fetch(url, requestOptions);
     }
@@ -151,7 +151,7 @@ class PingData {
         myHeaders.append("Content-Type", "application/json");
 
         //  We build the consent object template for the specified definition, and then update the data field with user's consent choices.
-        if (definition == "share-account-balances") {
+        if (definition === "share-account-balances") {
             consentObject = { "status": "accepted", "subject": "", "actor": "", "audience": "BXFinance", "definition": { "id": "", "version": "0.1", "locale": "en-us" }, "titleText": "Share Account Balances", "dataText": "Share Account Balances", "purposeText": "Share Account Balances", "data": { "share-balance": [] }, "consentContext": {} }
             consentObject.subject = uid;
             consentObject.actor = uid;
@@ -197,7 +197,7 @@ class PingData {
         console.info("Updating it to:", consent);
         
         //  We build the consent object template for the specified definition, and then update the data field with user's consent choices.
-        if (definition == "share-account-balances") {
+        if (definition === "share-account-balances") {
             const status = consent.length > 0 ? "accepted" : "revoked";
             consentObject = { "status": status, "data": { "share-balance": [] } };
             consentObject.data["share-balance"] = consent;
@@ -241,8 +241,9 @@ class PingData {
             redirect: 'follow'
         };
         
-        if (forWhom == "marketing") {
+        if (forWhom === "marketing") {
             console.info("Getting AnyMarketing consent data.");
+            // eslint-disable-next-line no-useless-escape
             const filterValue = '\"' + uid + '\"';
             url = this.dgScimURI + this.dgScimVersion + this.dgUsersResource + "?filter=uid eq " + encodeURIComponent(filterValue);
         } else {//advisor

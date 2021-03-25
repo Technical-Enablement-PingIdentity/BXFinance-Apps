@@ -7,10 +7,10 @@ import "./FormPassword.scss";
 
 class FormPassword extends React.Component {
   componentDidMount () {
-    var eye = document.querySelectorAll(".icon-eye");
-    var inputEye = document.querySelectorAll(".form-password > input");
+    let eye = document.querySelectorAll(".icon-eye");
+    let inputEye = document.querySelectorAll(".form-password > input");
 
-    for(var i=0; i < eye.length; i++){
+    for(let i=0; i < eye.length; i++){
       eye[i].addEventListener('mousedown', function(){
         inputEye[i - 1].type = "text";
       });  
@@ -23,7 +23,7 @@ class FormPassword extends React.Component {
     return (
       <FormGroup className="form-group-light form-password">
         <Label for="password">{this.props.label}</Label>
-        <img src={process.env.PUBLIC_URL + "/images/icons/password-hide.svg"} alt="password" className="icon-eye" />
+        <img src={window._env_.PUBLIC_URL + "/images/icons/password-hide.svg"} alt="password" className="icon-eye" />
         <Input type="password" onChange={this.props.setPassword.bind(this)} name={this.props.name} id={this.props.name} placeholder={this.props.placeholder} />
       </FormGroup>
     );

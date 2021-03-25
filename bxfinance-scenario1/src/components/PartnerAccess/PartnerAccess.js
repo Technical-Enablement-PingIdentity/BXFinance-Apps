@@ -39,7 +39,7 @@ class PartnerAccess extends React.Component {
     return (
       <>
         <Row className={classNames({ "gray": (this.props.index % 2) })}>
-          <Col md={12} lg={4}><img src={process.env.PUBLIC_URL + this.props.data.logo} alt="" /></Col>
+          <Col md={12} lg={4}><img src={window._env_.PUBLIC_URL + this.props.data.logo} alt="" /></Col>
           <Col md={12} lg={4}>
             <CustomInput type="radio" id={`${this.props.data.name}_yes`} checked={this.state.isOpen} name={this.props.data.name} label="Yes" onClick={this.toggle} />
             <CustomInput type="radio" id={`${this.props.data.name}_no`} checked={!this.state.isOpen} name={this.props.data.name} label="No" onClick={this.toggle} />

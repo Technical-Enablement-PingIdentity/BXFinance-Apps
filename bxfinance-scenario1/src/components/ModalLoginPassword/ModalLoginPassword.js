@@ -89,9 +89,9 @@ class ModalLoginPassword extends React.Component {
   }
   toggleTab(tab) {
     /* BEGIN PING INTEGRATION: We're letting PF handle SSPR to demo Velocity templates. */
-    if (tab == '4') {
+    if (tab === '4') {
       window.location.assign(data.pfAcctRecoveryURI);
-    } else if (tab == '5') {
+    } else if (tab === '5') {
       window.location.assign(data.pfPwdResetURI);
     } else {
       /* END PING INTEGRATION */
@@ -123,12 +123,9 @@ class ModalLoginPassword extends React.Component {
         return element.includes(deviceSelection);
       });
       
-      deviceId = deviceList[deviceRefIndex][1];
+      deviceId = event.target.getAttribute("did");
     }
 
-    deviceRefIndex = deviceList.findIndex((element, index) => {
-      return element.includes(deviceSelection);
-    });
     target = deviceList[deviceRefIndex][2];
     name = deviceList[deviceRefIndex][3];
 
@@ -139,7 +136,7 @@ class ModalLoginPassword extends React.Component {
         loginMethod: deviceSelection,
         deviceName: name,
         loginMethodUnset: false,
-        loginMethodFormGroupClass: 'form-group-light' //Doubt we need this. Was probably T3 placeholder since they didn't know how we would Implement Ping integration.
+        loginMethodFormGroupClass: 'form-group-light'
       }
     });
     /* END PING INTEGRATION: */
@@ -190,15 +187,15 @@ class ModalLoginPassword extends React.Component {
       loginError: false,
       loginErrorMsg: ""
     });
-    const pswd = tab == '2' ? this.state.swaprods : "WTF?"; //TODO Do we care about the tab param here? Toss?
+    const pswd = tab === '2' ? this.state.swaprods : "WTF?"; //TODO Do we care about the tab param here? Toss?
     const cachedFlowResponse = JSON.parse(this.Session.getAuthenticatedUserItem("flowResponse"));
 
     if (pswd) { //TODO do we need this test anymore?
       let data = "";
 
-      switch (tab) {
+      switch (tab) { // Each case corresponds to a tab pane in the UI.
         case "1":
-          // Usernmae/password form. This is the default state. Will probably never be called from here.
+          // Username/password form. This is the default state for the component. Will probably never be called from here.
           this.toggleTab("1");
           break;
         case "2":
@@ -210,7 +207,7 @@ class ModalLoginPassword extends React.Component {
               
               if (jsonResults.status === "RESUME") {
                 this.PingAuthN.handleAuthNflow({ flowResponse: jsonResults });//Don't need to do anything more than call handleAuthNFlow(). RESUME always results in a redireect to the TargetResource.
-              } else if (jsonResults.status == "DEVICE_PROFILE_REQUIRED") {
+              } else if (jsonResults.status === "DEVICE_PROFILE_REQUIRED") {
                 console.info("ModalLoginPassword.js","PingOne Risk eval needs device profile.");
                 window.profileDevice(this.buildDeviceProfile);
                 //BEGIN DELAY: P1Risk device profiling scripts take just long enough to run that we were trying to send the profile to the authN API before we had it.
@@ -253,14 +250,14 @@ class ModalLoginPassword extends React.Component {
                     });
                 }, 1000, jsonResults, this.deviceProfileString);
                 //END DELAY.
-              } else if (jsonResults.code == "VALIDATION_ERROR") {
+              } else if (jsonResults.code === "VALIDATION_ERROR") {
                 console.info("Validation Error", jsonResults.details[0].userMessage);
                 this.setState({
                   loginError: true,
                   loginErrorMsg: jsonResults.details[0].userMessage
                 });
               } else {
-                throw "Flow Status Exception: Unexpected status."; //TODO This is probably a corner case, but we need to use ModalError.js for this.
+                throw new Error("Flow Status Exception: Unexpected status."); //TODO This is probably a corner case, but we need to use ModalError.js for this.
               }
             })
             .catch(e => {
@@ -300,7 +297,7 @@ class ModalLoginPassword extends React.Component {
           this.PingAuthN.handleAuthNflow({ flowResponse: cachedFlowResponse, body: data })
             .then(response => response.json())
             .then(jsonResponse => {
-              let success = this.Session.setAuthenticatedUserItem("flowResponse", JSON.stringify(jsonResponse));
+              if (jsonResponse.status) { let success = this.Session.setAuthenticatedUserItem("flowResponse", JSON.stringify(jsonResponse)); }
               if (jsonResponse.status === "MFA_COMPLETED") {
                 this.PingAuthN.handleAuthNflow({ flowResponse: jsonResponse, body: "" })
                   .then(response => response.json())
@@ -310,6 +307,9 @@ class ModalLoginPassword extends React.Component {
                       this.PingAuthN.handleAuthNflow({ flowResponse: jsonResult })
                     }
                   });
+              } else {
+                // User got the OTP wrong. Try again.
+                this.toggleTab("3");
               }
             })
             .catch(e => {
@@ -373,7 +373,7 @@ class ModalLoginPassword extends React.Component {
     return (
       <div>
         <Modal isOpen={this.state.isOpen} toggle={this.toggle.bind(this)} onClosed={this.onClosed.bind(this)} className="modal-login">
-          <ModalHeader toggle={this.toggle.bind(this)} close={closeBtn}><img src={process.env.PUBLIC_URL + "/images/logo.svg"} alt="logo" /></ModalHeader>
+          <ModalHeader toggle={this.toggle.bind(this)} close={closeBtn}><img src={window._env_.PUBLIC_URL + "/images/logo.svg"} alt="logo" /></ModalHeader>
           <ModalBody>
             <form>
               <TabContent activeTab={this.state.activeTab}>
@@ -382,11 +382,11 @@ class ModalLoginPassword extends React.Component {
                   {this.state.loginError && <span style={{ color: 'red' }}>{this.state.loginErrorMsg}</span>} {/* PING INTEGRATION */}
                   <FormGroup className="form-group-light">
                     <Label for="username">{data.form.fields.username.label}</Label>
-                    <Input type="text" name="username" readOnly id="username" value={this.state.userName} placeholder={data.form.fields.username.placeholder} />
+                    <Input autoComplete="off" type="text" name="username" readOnly id="username" value={this.state.userName} placeholder={data.form.fields.username.placeholder} />
                   </FormGroup>
                   <FormGroup className="form-group-light">
                     <Label for="password">{data.form.fields.password.label}</Label>
-                    <Input type="password" onChange={this.handlePswdChange.bind(this)} name="password" id="password" placeholder={data.form.fields.password.placeholder} />
+                    <Input autoComplete="off" type="password" onChange={this.handlePswdChange.bind(this)} name="password" id="password" placeholder={data.form.fields.password.placeholder} />
                   </FormGroup>
                   {/* <FormPassword setPassword={this.handlePswdChange} name="password" label={data.form.fields.password.label} placeholder={data.form.fields.password.placeholder} /> */}
                   <FormGroup className="form-group-light">
@@ -405,15 +405,26 @@ class ModalLoginPassword extends React.Component {
                 <TabPane tabId="2"> {/* Device/login selection. */}
                   <h4>{data.titles.login_method}</h4>
                   <FormGroup className={this.state.loginMethodFormGroupClass}>
-                    <div>{/* BEGIN PING INTEGRATION */}
-                      {this.deviceExists("iPhone") &&
-                        <CustomInput type="radio" id="login_method_iPhone" name="login_method" label={data.form.fields.login_method.options.faceid} className="form-check-inline" onClick={this.setLoginMethod.bind(this)} />}
-                      {/* NOT SUPPORTING THIS FOR DEMOS {this.deviceExists("TOTP") &&
-                        <CustomInput type="radio" id="login_method_TOTP" name="login_method" label={data.form.fields.login_method.options.totp} className="form-check-inline" onClick={this.setLoginMethod.bind(this)} />} */}
-                      {this.deviceExists("SMS") &&
-                        <CustomInput type="radio" id="login_method_SMS" name="login_method" label={data.form.fields.login_method.options.text} className="form-check-inline" onClick={this.setLoginMethod.bind(this)} />}
-                      {this.deviceExists("Email") &&
-                        <CustomInput type="radio" id="login_method_Email" name="login_method" label={data.form.fields.login_method.options.email} className="form-check-inline" onClick={this.setLoginMethod.bind(this)} />}
+                    <div>{/* BEGIN PING INTEGRATION: this switch/case could be reduced to a single line return, dynamically building the CustomInput tag. Demo 80/20 rule. */}
+                      {this.state.deviceList.map((device, idx) => {
+                        switch (device[0]) {
+                          case "iPhone":
+                            return <CustomInput key={idx} type="radio" did={device[1]} id={idx + "_login_method_iPhone"} name="login_method" label={data.form.fields.login_method.options.faceid} className="form-check-inline" onClick={this.setLoginMethod.bind(this)}><br />{device[3]}</CustomInput>
+                            break;
+                          case "SMS":
+                            return <CustomInput key={idx} type="radio" did={device[1]} id={idx + "_login_method_SMS"} name="login_method" label={data.form.fields.login_method.options.text} className="form-check-inline" onClick={this.setLoginMethod.bind(this)}><br />{device[2]}</CustomInput>
+                            break;
+                          case "Email":
+                            return <CustomInput key={idx} type="radio" did={device[1]} id={idx + "_login_method_Email"} name="login_method" label={data.form.fields.login_method.options.email} className="form-check-inline" onClick={this.setLoginMethod.bind(this)}><br />{device[2]}</CustomInput>
+                            break;
+                          case "TOTP":
+                            //This is currently not supported for BXF demos. No demand yet.
+                            //I.e. Google Authenticator, MS Authenticator, etc.
+                            // return <CustomInput key={idx} type="radio" did={device[1]} id={idx + "_login_method_TOTP"} name="login_method" label={data.form.fields.login_method.options.totp} className="form-check-inline" onClick={this.setLoginMethod.bind(this)}<br />{device[2]}</CustomInput>
+                            console.warn("Unsupported Device", "For this BX demo, we decided not to support TOTP devices; Google Authenticator, MS Authenticator, etc.");
+                            break;
+                        }
+                      })}
                     </div>{/* END PING INTEGRATION */}
                   </FormGroup>
                   <div className="mb-4 text-center">
@@ -425,7 +436,7 @@ class ModalLoginPassword extends React.Component {
                 </TabPane>
                 <TabPane tabId="3">{/* MFA sent, check phone msg. */} {/* TODO jump to here for default device if OTP_REQUIRED */}
                   Using {this.state.loginMethod} at {this.state.loginTarget}.
-                  <div className="mobile-loading" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/login-device-outline.jpg)` }}>
+                  <div className="mobile-loading" style={{ backgroundImage: `url(${window._env_.PUBLIC_URL}/images/login-device-outline.jpg)` }}>
                     <div className="spinner">
                       <FontAwesomeIcon icon={faCircleNotch} size="3x" className="fa-spin" />
                     </div>
@@ -435,7 +446,7 @@ class ModalLoginPassword extends React.Component {
                   {this.state.loginMethod !== "iPhone" &&
                     <FormGroup className="form-group-light">
                       <Label for="otp">{data.form.fields.otp.label}</Label>
-                      <Input onChange={this.handleOTPChange.bind(this)} type="text" name="otp" id="otp" placeholder={data.form.fields.otp.placeholder} value={this.state.otp} />
+                      <Input onChange={this.handleOTPChange.bind(this)} autoComplete="off" type="text" name="otp" id="otp" placeholder={data.form.fields.otp.placeholder} value={this.state.otp} />
                     </FormGroup>}
                   {this.state.loginMethod !== "iPhone" &&
                     <div className="mb-3">

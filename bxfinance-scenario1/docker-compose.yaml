@@ -10,4 +10,4 @@ services:
     BXFinance:
         ports:
             - '5000:5000'
-        image: 'bxfinance-app:prod' # Tag options are qa, stage, prod.
+        image: 'bxfinanceapp:latest' # Tag options are qa, stage, prod.
