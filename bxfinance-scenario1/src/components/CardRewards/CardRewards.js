@@ -9,6 +9,11 @@ import "./CardRewards.scss";
 import data from './data.json';
 
 class CardRewards extends React.Component {
+
+  newTab(uri) {
+    window.open(window._env_.PUBLIC_URL + uri, "_blank")
+  }
+  
   render() {
     const pathName=window.location.pathname;
     return (
@@ -19,7 +24,7 @@ class CardRewards extends React.Component {
             <CardText>{data.content}</CardText>
             { /* Don't show 'Apply Today' link on the home page. Must be logged in to apply. */ }
             { (!(pathName == "/app/") && !(pathName == "/app")) && 
-            <CardLink href={window._env_.PUBLIC_URL + "/credit-card"} target="_blank">{data.button}</CardLink> }
+              <CardLink onClick={() => this.newTab("/credit-card")}>{data.button}</CardLink> }
           </CardBody>
           <img src={window._env_.PUBLIC_URL + "/images/home-hero-card.png"} className="img-credit-card" alt="card" />
         </Card>
