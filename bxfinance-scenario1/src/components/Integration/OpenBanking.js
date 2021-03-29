@@ -24,6 +24,7 @@ class OpenBanking {
     constructor() {
         // Didn't abstract these since they shouldn't ever change. I say that now.
         this.mockOBhost = "https://babbtx-aspsp.herokuapp.com/OpenBanking";
+        // this.mockOBhost = "https://staging-babbtx-aspsp.herokuapp.com/OpenBanking/v2/accounts"; //TODO only use staging server for testing changes.
         this.mockOBAPIver = "/v2";
         this.mockOBbalURI = "/balances";
         this.mockOBacctsURI = "/accounts";
@@ -43,7 +44,6 @@ class OpenBanking {
         //If we had to time to be cool, we could have extracted the uid from the token.
         console.info("OpenBanking.js", "Provisioning bank accounts.");
 
-        let acctIdsArr = [];
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + token);
 

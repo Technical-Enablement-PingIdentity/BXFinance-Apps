@@ -41,7 +41,8 @@ a,
 
   &:hover,
   &:focus {
-    font-weight: bold;
+    // font-weight: bold; //removed this and added opacity to resolve layout issues.
+    opacity: 0.6;
     color: theme-color("info-hover");
     text-decoration: none;
   }

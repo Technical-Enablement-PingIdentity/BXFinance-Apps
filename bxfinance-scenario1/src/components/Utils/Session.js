@@ -25,30 +25,35 @@ class Session {
        const advisorAllowedPaths = ["/app/advisor", "/app/advisor/client", "/app/advisor/tracking", "/app/advisor/prospecting", "/app/advisor/other-services"];
        const marketingAllowedPaths = ["/app/any-marketing", "/app/any-marketing/dashboard", "/app/any-marketing/client-profiles", "/app/any-marketing/tracking", "/app/any-marketing/equities-trading"];
        const homePaths = ["/app/", "/app"];
+       const startSSOURI = "/idp/startSSO.ping?PartnerSpId=" + window._env_.REACT_APP_HOST + "&TargetResource=" + window._env_.REACT_APP_HOST + "/app/credit-card";
+       const creditCardPath = "/app/credit-card";
        console.info("Session.js", "Checking access rules for type " + userType + " at " + path);
        
        //They have to be logged in to be anywhere other than home.
-       if (loggedOut && (!homePaths.includes(path))) {
-           console.info("Access rule", "Attempting to access protected page as unauthenticated user. Redirecting to home.")
-           window.location.assign(homePaths[0]);
+       if (loggedOut && path === creditCardPath) {
+           console.info("Access rule", "Attempting to access protected page as unauthenticated user. Starting SSO for credit-card.");
+           window.location.assign(startSSOURI);
+        } else if (loggedOut && (!homePaths.includes(path))) {
+            console.info("Access rule", "Attempting to access protected page as unauthenticated user. Redirecting to home.");
+            window.location.assign(homePaths[0]);
         } else {
            switch (userType) {
                case "AnyWealthAdvisor":
                    if (!advisorAllowedPaths.includes(path)) {
-                       console.info("Access Rule", "Attempt to access disallowed path for user type " + userType + ". Redirecting to default.");
+                       console.info("Access Rule", "Attempt to access disallowed resource for user type " + userType + ". Redirecting to default.");
                        window.location.assign(advisorAllowedPaths[0]);
                    }
                    break;
                case "AnyMarketing":
                    if (!marketingAllowedPaths.includes(path)) {
-                       console.info("Access Rule", "Attempt to access disallowed path for user type " + userType + ". Redirecting to default.");
+                       console.info("Access Rule", "Attempt to access disallowed resource for user type " + userType + ". Redirecting to default.");
                        window.location.assign(marketingAllowedPaths[0]);
                    }
                    break;
                case "customer":
-                   if (advisorAllowedPaths.includes(path) || marketingAllowedPaths.includes(path)) {
-                       console.info("Access Rule", "Attempt to access disallowed path for user type " + userType + ". Redirecting to default.");
-                       window.location.assign("/banking"); //Default for a logged in user
+                   if (advisorAllowedPaths.includes(path) || marketingAllowedPaths.includes(path) || homePaths.includes(path)) {
+                       console.info("Access Rule", "Attempt to access disallowed resource for user type " + userType + ". Redirecting to default.");
+                       window.location.assign("/app/banking"); //Default for a logged in user
                    }
                    break;
                default:
@@ -65,7 +70,7 @@ class Session {
     @return {string} DOM String.
     */
     getAuthenticatedUserItem(key) {
-        console.info("Session.js", "Getting a item from local browser session.");
+        console.info("Session.js", "Getting " + key + " from local browser session.");
 
         return sessionStorage.getItem(key);
     }
@@ -86,7 +91,7 @@ class Session {
                                 using separate data containers.)
     */
     setAuthenticatedUserItem(key, value) {
-        console.info("Session.js", "Saving an item into local browser session.");
+        console.info("Session.js", "Saving " + key + " into local browser session.");
 
         sessionStorage.setItem(key, value);
         return true;
@@ -100,7 +105,7 @@ class Session {
     @return {boolean} Success state of item removal from storage.
     */
     removeAuthenticatedUserItem(key) {
-        console.info("Session.js", "Removing an item from local browser session.");
+        console.info("Session.js", "Removing " + key + " from local browser session.");
 
         sessionStorage.removeItem(key);
         return true;

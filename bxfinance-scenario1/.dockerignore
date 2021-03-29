@@ -7,3 +7,4 @@ docker-compose.yaml
 docker-compose-dev.yaml
 msanchez.json
 documentation
+.npmignore

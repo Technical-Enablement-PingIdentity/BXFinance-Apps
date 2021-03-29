@@ -1,3 +1,7 @@
+@import '../../styles/variables.scss';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/bootstrap-grid';
+
 .accounts {
   position: relative;
   background: #f3f3f3;
@@ -25,8 +29,17 @@
     .card-rewards {
       margin-top: 20px;
       margin-bottom: 40px;
+      z-index: 0;
     }
-  }
+
+        img.img-credit-card {
+          max-width: 450px;
+          position: absolute;
+          bottom: -120px;
+          right: -120px;
+          z-index: -1;
+        }
+    }
 
   .content {
     flex-grow: 1;
