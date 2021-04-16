@@ -64,9 +64,10 @@ class PrivacySecurity extends React.Component {
 
   showStep2() {
     /* BEGIN PING INTEGRATION */
-    if (this.state.consentId !== "0") {//User has a consent record, so update.
+    const consentID = this.Session.getAuthenticatedUserItem("acctsConsentId");
+    if (consentID !== null && consentID !== "undefined") {//User has a consent record, so update.
       console.info("Consent ID", this.state.consentId);
-      this.PingData.updateUserConsent(this.Session.getAuthenticatedUserItem("AT"), this.state.consentedAccts, this.state.consentId, this.consentDef)
+      this.PingData.updateUserConsent(this.Session.getAuthenticatedUserItem("AT"), this.state.consentedAccts, consentID, this.consentDef)
         .then(response => response.json())
         .then(consentData => {
           console.info("Updated user consent", JSON.stringify(consentData));
@@ -80,6 +81,8 @@ class PrivacySecurity extends React.Component {
         .then(response => response.json())
         .then(consentData => {
           console.info("Created user consent", JSON.stringify(consentData));
+          //Add the consent ID to the app session so we know to update consents later.
+          this.Session.setAuthenticatedUserItem("acctsConsentId", consentData.id);
         })
         .catch(e => {
           console.error("CreateUserConsents Exception", e)
@@ -154,9 +157,9 @@ class PrivacySecurity extends React.Component {
         .then(consentData => {
           console.info("Got user consents", JSON.stringify(consentData));
           if (consentData.count > 0) { //Do we have a consent record? (There is no status if no record)
+            this.Session.setAuthenticatedUserItem("acctsConsentId", consentData._embedded.consents[0].id);
             this.setState({
               anywealthadvisor: consentData._embedded.consents[0].data["share-balance"].length ? true : false,
-              consentId: consentData._embedded.consents[0].id
             });
             //loop over share-balance array updating account consent state.
             // This loop ensures we handle n number of accts on someones record to avoid complexity, 
@@ -186,9 +189,9 @@ class PrivacySecurity extends React.Component {
             .then(consentData => {
               console.info("Got user consents", JSON.stringify(consentData));
               if (consentData.count > 0) { //Do we have a consent record? (There is no status if no record)
+                this.Session.setAuthenticatedUserItem("acctsConsentId", consentData._embedded.consents[0].id);
                 this.setState({
                   anywealthadvisor: consentData._embedded.consents[0].data["share-balance"].length ? true : false,
-                  consentId: consentData._embedded.consents[0].id
                 });
                 //loop over share-balance array updating account consent state.
                 // This loop ensures we handle n number of accts on someones record to avoid complexity, 
