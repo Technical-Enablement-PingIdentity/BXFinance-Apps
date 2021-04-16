@@ -53,13 +53,14 @@ class CommunicationPreferences extends React.Component {
 
   showStep2() {
     /* BEGIN PING INTEGRATION */
-    if (this.state.consentId !== "0") { //Updating existing consent record.
+    // if (this.state.consentId !== "0") { //Updating existing consent record.
+    const consentID = this.Session.getAuthenticatedUserItem("commConsentId");
+    if (consentID !== null && consentID !== "undefined") {
       const consent = { "sms": this.state.sms, "email": this.state.email, "homeAddress": this.state.mail };
-      this.PingData.updateUserConsent(this.Session.getAuthenticatedUserItem("AT"), consent, this.state.consentId, this.consentDef)
+      this.PingData.updateUserConsent(this.Session.getAuthenticatedUserItem("AT"), consent, consentID, this.consentDef)
         .then(response => response.json())
         .then(consentData => {
           console.info("Updated user consent", JSON.stringify(consentData));
-          
         })
         .catch(e => {
           console.error("UpdateUserConsents Exception", e)
@@ -70,6 +71,8 @@ class CommunicationPreferences extends React.Component {
         .then(response => response.json())
         .then(consentData => {
           console.info("Created user consent", JSON.stringify(consentData));
+          //Add the consent ID to the app session so we know to update consents later.
+          this.Session.setAuthenticatedUserItem("commConsentId", consentData.id);
         })
         .catch(e => {
           console.error("CreateUserConsents Exception", e)
@@ -99,12 +102,14 @@ class CommunicationPreferences extends React.Component {
 
   /* BEGIN PING INTEGRATION */
   componentDidMount() {
+    // TODO collapse this if/else into a single block. Abstract the getToken and save to session so code isn't duplicated. Lame.
     if (this.Session.getAuthenticatedUserItem("AT")) {
       const token = this.Session.getAuthenticatedUserItem("AT");
       this.PingData.getUserConsents(token, this.Session.getAuthenticatedUserItem("uid"), this.consentDef)
         .then(response => response.json())
         .then(consentData => {
           if (consentData.count > 0) {
+            this.Session.setAuthenticatedUserItem("commConsentId", consentData._embedded.consents[0].id);
             this.setState({
               // TODO this is probably overkill having a checked version of the consent. You could probably infer from the consent value.
               sms: consentData._embedded.consents[0].data.sms,
@@ -112,9 +117,11 @@ class CommunicationPreferences extends React.Component {
               mail: consentData._embedded.consents[0].data.homeAddress,
               smsChecked: consentData._embedded.consents[0].data.sms === true ? true : false,
               emailChecked: consentData._embedded.consents[0].data.email === true ? true : false,
-              mailChecked: consentData._embedded.consents[0].data.homeAddress === true ? true : false,
-              consentId: consentData._embedded.consents[0].id
+              mailChecked: consentData._embedded.consents[0].data.homeAddress === true ? true : false
+              // consentId: consentData._embedded.consents[0].id
             });
+          } else {
+            console.debug("DEBUG", "No consents found on page load.");
           }
         })
         .catch(e => {
@@ -128,15 +135,18 @@ class CommunicationPreferences extends React.Component {
             .then(response => response.json())
             .then(consentData => {
               if (consentData.count > 0) {
+                this.Session.setAuthenticatedUserItem("commConsentId", consentData._embedded.consents[0].id);
                 this.setState({
                   sms: consentData._embedded.consents[0].data.sms,
                   email: consentData._embedded.consents[0].data.email,
                   mail: consentData._embedded.consents[0].data.homeAddress,
                   smsChecked: consentData._embedded.consents[0].data.sms === true ? true : false,
                   emailChecked: consentData._embedded.consents[0].data.email === true ? true : false,
-                  mailChecked: consentData._embedded.consents[0].data.homeAddress === true ? true : false,
-                  consentId: consentData._embedded.consents[0].id
+                  mailChecked: consentData._embedded.consents[0].data.homeAddress === true ? true : false
+                  // consentId: consentData._embedded.consents[0].id
                 });
+              } else {
+                console.debug("DEBUG", "No consents found on page load.");
               }
             })
             .catch(e => {
