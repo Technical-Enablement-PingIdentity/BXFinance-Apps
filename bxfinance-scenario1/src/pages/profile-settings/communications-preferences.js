@@ -53,7 +53,6 @@ class CommunicationPreferences extends React.Component {
 
   showStep2() {
     /* BEGIN PING INTEGRATION */
-    // if (this.state.consentId !== "0") { //Updating existing consent record.
     const consentID = this.Session.getAuthenticatedUserItem("commConsentId");
     if (consentID !== null && consentID !== "undefined") {
       const consent = { "sms": this.state.sms, "email": this.state.email, "homeAddress": this.state.mail };
@@ -118,7 +117,6 @@ class CommunicationPreferences extends React.Component {
               smsChecked: consentData._embedded.consents[0].data.sms === true ? true : false,
               emailChecked: consentData._embedded.consents[0].data.email === true ? true : false,
               mailChecked: consentData._embedded.consents[0].data.homeAddress === true ? true : false
-              // consentId: consentData._embedded.consents[0].id
             });
           } else {
             console.debug("DEBUG", "No consents found on page load.");
@@ -143,7 +141,6 @@ class CommunicationPreferences extends React.Component {
                   smsChecked: consentData._embedded.consents[0].data.sms === true ? true : false,
                   emailChecked: consentData._embedded.consents[0].data.email === true ? true : false,
                   mailChecked: consentData._embedded.consents[0].data.homeAddress === true ? true : false
-                  // consentId: consentData._embedded.consents[0].id
                 });
               } else {
                 console.debug("DEBUG", "No consents found on page load.");

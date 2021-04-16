@@ -160,7 +160,6 @@ class PrivacySecurity extends React.Component {
             this.Session.setAuthenticatedUserItem("acctsConsentId", consentData._embedded.consents[0].id);
             this.setState({
               anywealthadvisor: consentData._embedded.consents[0].data["share-balance"].length ? true : false,
-              // consentId: consentData._embedded.consents[0].id
             });
             //loop over share-balance array updating account consent state.
             // This loop ensures we handle n number of accts on someones record to avoid complexity, 
@@ -193,7 +192,6 @@ class PrivacySecurity extends React.Component {
                 this.Session.setAuthenticatedUserItem("acctsConsentId", consentData._embedded.consents[0].id);
                 this.setState({
                   anywealthadvisor: consentData._embedded.consents[0].data["share-balance"].length ? true : false,
-                  // consentId: consentData._embedded.consents[0].id
                 });
                 //loop over share-balance array updating account consent state.
                 // This loop ensures we handle n number of accts on someones record to avoid complexity, 
