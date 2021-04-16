@@ -307,7 +307,7 @@ class ModalLogin extends React.Component {
     const closeBtn = <div />;
     return (
       <div>
-        <Modal isOpen={this.state.isOpen} toggle={this.toggle.bind(this)} onClosed={this.onClosed.bind(this)} className="modal-login">
+        <Modal autoFocus={false} isOpen={this.state.isOpen} toggle={this.toggle.bind(this)} onClosed={this.onClosed.bind(this)} className="modal-login">
           <ModalHeader toggle={this.toggle.bind(this)} close={closeBtn}><img src={window._env_.PUBLIC_URL + "/images/logo.svg"} alt="logo" /></ModalHeader>
           <ModalBody>
             <form>
@@ -316,7 +316,7 @@ class ModalLogin extends React.Component {
                   <h4>{data.titles.welcome}</h4>
                   <FormGroup className="form-group-light">
                     <Label for="username">{data.form.fields.username.label}</Label>
-                    <Input onChange={this.handleIDChange.bind(this)} autoComplete="off" type="text" name="username" id="username" placeholder={data.form.fields.username.placeholder} value={this.state.userName} /> {/* PING INTEGRATION added onChange. */}
+                    <Input autoFocus={true} onChange={this.handleIDChange.bind(this)} autoComplete="off" type="text" name="username" id="username" placeholder={data.form.fields.username.placeholder} value={this.state.userName} /> {/* PING INTEGRATION added onChange. */}
                   </FormGroup>
                   <FormGroup className="form-group-light">
                     {/* <CustomInput type="checkbox" id="remember" label={data.form.fields.remember.label} /> */}
@@ -372,7 +372,7 @@ class ModalLogin extends React.Component {
                   {this.state.loginMethod !== "iPhone" &&
                     <FormGroup className="form-group-light">
                       <Label for="otp">{data.form.fields.otp.label}</Label>
-                      <Input onChange={this.handleOTPChange.bind(this)} autoComplete="off" type="text" name="otp" id="otp" placeholder={data.form.fields.otp.placeholder} value={this.state.otp} />
+                      <Input autoFocus={true} onChange={this.handleOTPChange.bind(this)} autoComplete="off" type="text" name="otp" id="otp" placeholder={data.form.fields.otp.placeholder} value={this.state.otp} />
                     </FormGroup>}
                   {this.state.loginMethod !== "iPhone" &&
                     <div className="mb-3">

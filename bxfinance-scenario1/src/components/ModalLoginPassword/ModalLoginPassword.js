@@ -372,7 +372,7 @@ class ModalLoginPassword extends React.Component {
     const closeBtn = <div />;
     return (
       <div>
-        <Modal isOpen={this.state.isOpen} toggle={this.toggle.bind(this)} onClosed={this.onClosed.bind(this)} className="modal-login">
+        <Modal autoFocus={false} isOpen={this.state.isOpen} toggle={this.toggle.bind(this)} onClosed={this.onClosed.bind(this)} className="modal-login">
           <ModalHeader toggle={this.toggle.bind(this)} close={closeBtn}><img src={window._env_.PUBLIC_URL + "/images/logo.svg"} alt="logo" /></ModalHeader>
           <ModalBody>
             <form>
@@ -386,7 +386,7 @@ class ModalLoginPassword extends React.Component {
                   </FormGroup>
                   <FormGroup className="form-group-light">
                     <Label for="password">{data.form.fields.password.label}</Label>
-                    <Input autoComplete="off" type="password" onChange={this.handlePswdChange.bind(this)} name="password" id="password" placeholder={data.form.fields.password.placeholder} />
+                    <Input autoFocus={true} autoComplete="off" type="password" onChange={this.handlePswdChange.bind(this)} name="password" id="password" placeholder={data.form.fields.password.placeholder} />
                   </FormGroup>
                   {/* <FormPassword setPassword={this.handlePswdChange} name="password" label={data.form.fields.password.label} placeholder={data.form.fields.password.placeholder} /> */}
                   <FormGroup className="form-group-light">
@@ -446,7 +446,7 @@ class ModalLoginPassword extends React.Component {
                   {this.state.loginMethod !== "iPhone" &&
                     <FormGroup className="form-group-light">
                       <Label for="otp">{data.form.fields.otp.label}</Label>
-                      <Input onChange={this.handleOTPChange.bind(this)} autoComplete="off" type="text" name="otp" id="otp" placeholder={data.form.fields.otp.placeholder} value={this.state.otp} />
+                      <Input autoFocus={true} onChange={this.handleOTPChange.bind(this)} autoComplete="off" type="text" name="otp" id="otp" placeholder={data.form.fields.otp.placeholder} value={this.state.otp} />
                     </FormGroup>}
                   {this.state.loginMethod !== "iPhone" &&
                     <div className="mb-3">
