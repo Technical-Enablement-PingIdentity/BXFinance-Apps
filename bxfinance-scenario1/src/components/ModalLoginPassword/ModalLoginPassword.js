@@ -95,10 +95,11 @@ class ModalLoginPassword extends React.Component {
       window.location.assign(data.pfPwdResetURI);
     } else {
       /* END PING INTEGRATION */
-
       this.setState({
         activeTab: tab
       });
+      //Hack for getting focus on the OTP field.... because reactstrap. :-(
+      if (tab === "3") { document.getElementById("otp").focus(); }
     }
   }
   setLoginMethod(event) {
@@ -434,7 +435,7 @@ class ModalLoginPassword extends React.Component {
                     <Button type="button" color="link" size="sm" className="text-info" onClick={this.toggle.bind(this)}>{data.form.buttons.help}</Button>
                   </div>
                 </TabPane>
-                <TabPane tabId="3">{/* MFA sent, check phone msg. */} {/* TODO jump to here for default device if OTP_REQUIRED */}
+                <TabPane tabId="3">{/* MFA sent, check phone msg. */}
                   Using {this.state.loginMethod} at {this.state.loginTarget}.
                   <div className="mobile-loading" style={{ backgroundImage: `url(${window._env_.PUBLIC_URL}/images/login-device-outline.jpg)` }}>
                     <div className="spinner">
@@ -446,7 +447,7 @@ class ModalLoginPassword extends React.Component {
                   {this.state.loginMethod !== "iPhone" &&
                     <FormGroup className="form-group-light">
                       <Label for="otp">{data.form.fields.otp.label}</Label>
-                      <Input autoFocus={true} onChange={this.handleOTPChange.bind(this)} autoComplete="off" type="text" name="otp" id="otp" placeholder={data.form.fields.otp.placeholder} value={this.state.otp} />
+                      <Input onChange={this.handleOTPChange.bind(this)} autoComplete="off" type="text" name="otp" id="otp" placeholder={data.form.fields.otp.placeholder} value={this.state.otp} />
                     </FormGroup>}
                   {this.state.loginMethod !== "iPhone" &&
                     <div className="mb-3">
