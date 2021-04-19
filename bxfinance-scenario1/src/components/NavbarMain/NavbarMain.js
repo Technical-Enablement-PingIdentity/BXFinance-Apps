@@ -76,6 +76,9 @@ class NavbarMain extends React.Component {
     }
 
   }
+  closeTab() {
+    window.close();
+  }
   handleClose() {
     console.info("We are closing the timeout modal.");
     this.setState({ showTimeoutModal: false });
@@ -238,11 +241,15 @@ class NavbarMain extends React.Component {
                   <NavLink><img src={window._env_.PUBLIC_URL + "/images/icons/support.svg"} alt={data.menus.utility.support} /></NavLink>
                 </NavItem>
                 {/* BEGIN PING INTEGRATION: added conditional rendering logic for Sign In/Out links. */}
+                {window.location.pathname === "/app/credit-card" &&
+                  <NavItem className="login">
+                    <NavLink href="#" onClick={this.closeTab.bind(this)}><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.close} className="mr-1" /> {data.menus.utility.close}</NavLink>
+                  </NavItem>}
                 {this.state.loggedOut &&
                   <NavItem className="login">
                     <NavLink href="#" onClick={this.triggerModalLogin.bind(this)}><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.login} className="mr-1" /> {data.menus.utility.login}</NavLink>
                   </NavItem>}
-                {!this.state.loggedOut &&
+                {!this.state.loggedOut && window.location.pathname !== "/app/credit-card" &&
                   <NavItem className="logout">
                     <Link to="/" onClick={this.startSLO.bind(this)} className="nav-link"><img src={window._env_.PUBLIC_URL + "/images/icons/user.svg"} alt={data.menus.utility.logout} className="mr-1" /> {data.menus.utility.logout}</Link>
                   </NavItem>}
@@ -287,7 +294,10 @@ class NavbarMain extends React.Component {
                   data.menus.primary.map((item, i) => {
                     return (
                       <NavItem key={i}>
-                        <NavLink to={item.url} activeClassName="active" tag={RRNavLink}>{item.title}</NavLink>
+                        {window.location.pathname !== "/app/credit-card" &&
+                          <NavLink to={item.url} activeClassName="active" exact tag={RRNavLink}>{item.title}</NavLink>}
+                        {window.location.pathname === "/app/credit-card" &&
+                          <NavLink to={"#"} activeClassName="active" exact >{item.title}</NavLink>}
                       </NavItem>
                     );
                   })
@@ -321,7 +331,10 @@ class NavbarMain extends React.Component {
                   data.menus.primary.map((item, i) => {
                     return (
                       <NavItem key={i}>
-                        <NavLink to={item.url} activeClassName="active" exact tag={RRNavLink}>{item.title}</NavLink>
+                        {window.location.pathname !== "/app/credit-card" && 
+                          <NavLink to={item.url} activeClassName="active" exact tag={RRNavLink}>{item.title}</NavLink>}
+                        {window.location.pathname === "/app/credit-card" &&
+                          item.title}
                       </NavItem>
                     );
                   })
