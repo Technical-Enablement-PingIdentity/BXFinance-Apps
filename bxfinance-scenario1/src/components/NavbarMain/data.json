@@ -32,7 +32,8 @@
 			"register_intro": "Not enrolled?",
 			"register": "Create an account",
 			"login": "Sign In",
-			"logout": "Sign Out"
+			"logout": "Sign Out",
+			"close": "Return to Your Account"
 		}
 	}
 }

@@ -95,10 +95,11 @@ class ModalLoginPassword extends React.Component {
       window.location.assign(data.pfPwdResetURI);
     } else {
       /* END PING INTEGRATION */
-
       this.setState({
         activeTab: tab
       });
+      //Hack for getting focus on the OTP field.... because reactstrap. :-(
+      if (tab === "3") { document.getElementById("otp").focus(); }
     }
   }
   setLoginMethod(event) {
@@ -372,7 +373,7 @@ class ModalLoginPassword extends React.Component {
     const closeBtn = <div />;
     return (
       <div>
-        <Modal isOpen={this.state.isOpen} toggle={this.toggle.bind(this)} onClosed={this.onClosed.bind(this)} className="modal-login">
+        <Modal autoFocus={false} isOpen={this.state.isOpen} toggle={this.toggle.bind(this)} onClosed={this.onClosed.bind(this)} className="modal-login">
           <ModalHeader toggle={this.toggle.bind(this)} close={closeBtn}><img src={window._env_.PUBLIC_URL + "/images/logo.svg"} alt="logo" /></ModalHeader>
           <ModalBody>
             <form>
@@ -386,7 +387,7 @@ class ModalLoginPassword extends React.Component {
                   </FormGroup>
                   <FormGroup className="form-group-light">
                     <Label for="password">{data.form.fields.password.label}</Label>
-                    <Input autoComplete="off" type="password" onChange={this.handlePswdChange.bind(this)} name="password" id="password" placeholder={data.form.fields.password.placeholder} />
+                    <Input autoFocus={true} autoComplete="off" type="password" onChange={this.handlePswdChange.bind(this)} name="password" id="password" placeholder={data.form.fields.password.placeholder} />
                   </FormGroup>
                   {/* <FormPassword setPassword={this.handlePswdChange} name="password" label={data.form.fields.password.label} placeholder={data.form.fields.password.placeholder} /> */}
                   <FormGroup className="form-group-light">
@@ -434,7 +435,7 @@ class ModalLoginPassword extends React.Component {
                     <Button type="button" color="link" size="sm" className="text-info" onClick={this.toggle.bind(this)}>{data.form.buttons.help}</Button>
                   </div>
                 </TabPane>
-                <TabPane tabId="3">{/* MFA sent, check phone msg. */} {/* TODO jump to here for default device if OTP_REQUIRED */}
+                <TabPane tabId="3">{/* MFA sent, check phone msg. */}
                   Using {this.state.loginMethod} at {this.state.loginTarget}.
                   <div className="mobile-loading" style={{ backgroundImage: `url(${window._env_.PUBLIC_URL}/images/login-device-outline.jpg)` }}>
                     <div className="spinner">

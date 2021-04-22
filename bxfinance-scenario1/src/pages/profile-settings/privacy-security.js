@@ -64,9 +64,10 @@ class PrivacySecurity extends React.Component {
 
   showStep2() {
     /* BEGIN PING INTEGRATION */
-    if (this.state.consentId !== "0") {//User has a consent record, so update.
+    const consentID = this.Session.getAuthenticatedUserItem("acctsConsentId");
+    if (consentID !== null && consentID !== "undefined") {//User has a consent record, so update.
       console.info("Consent ID", this.state.consentId);
-      this.PingData.updateUserConsent(this.Session.getAuthenticatedUserItem("AT"), this.state.consentedAccts, this.state.consentId, this.consentDef)
+      this.PingData.updateUserConsent(this.Session.getAuthenticatedUserItem("AT"), this.state.consentedAccts, consentID, this.consentDef)
         .then(response => response.json())
         .then(consentData => {
           console.info("Updated user consent", JSON.stringify(consentData));
@@ -80,6 +81,8 @@ class PrivacySecurity extends React.Component {
         .then(response => response.json())
         .then(consentData => {
           console.info("Created user consent", JSON.stringify(consentData));
+          //Add the consent ID to the app session so we know to update consents later.
+          this.Session.setAuthenticatedUserItem("acctsConsentId", consentData.id);
         })
         .catch(e => {
           console.error("CreateUserConsents Exception", e)
@@ -110,9 +113,11 @@ class PrivacySecurity extends React.Component {
 
   }
 
-  toggleModal() {
+  toggleModal(evt) {
+    const partnerArrIdx = evt.target.id;
     this.setState({
-      isModalOpen: !this.state.isModalOpen
+      isModalOpen: !this.state.isModalOpen,
+      partnerLearnMoreModal: partnerArrIdx
     });
   }
 
@@ -154,9 +159,9 @@ class PrivacySecurity extends React.Component {
         .then(consentData => {
           console.info("Got user consents", JSON.stringify(consentData));
           if (consentData.count > 0) { //Do we have a consent record? (There is no status if no record)
+            this.Session.setAuthenticatedUserItem("acctsConsentId", consentData._embedded.consents[0].id);
             this.setState({
               anywealthadvisor: consentData._embedded.consents[0].data["share-balance"].length ? true : false,
-              consentId: consentData._embedded.consents[0].id
             });
             //loop over share-balance array updating account consent state.
             // This loop ensures we handle n number of accts on someones record to avoid complexity, 
@@ -186,9 +191,9 @@ class PrivacySecurity extends React.Component {
             .then(consentData => {
               console.info("Got user consents", JSON.stringify(consentData));
               if (consentData.count > 0) { //Do we have a consent record? (There is no status if no record)
+                this.Session.setAuthenticatedUserItem("acctsConsentId", consentData._embedded.consents[0].id);
                 this.setState({
                   anywealthadvisor: consentData._embedded.consents[0].data["share-balance"].length ? true : false,
-                  consentId: consentData._embedded.consents[0].id
                 });
                 //loop over share-balance array updating account consent state.
                 // This loop ensures we handle n number of accts on someones record to avoid complexity, 
@@ -221,8 +226,9 @@ class PrivacySecurity extends React.Component {
     const partner1 = data.steps[0].partners[0];
     const partner2 = data.steps[0].partners[1];
     const partner3 = data.steps[0].partners[2];
+    const partnerModalArr = [partner1.modal, partner2.modal, partner3.modal]; /* PING INTEGRATION: */
     let isChecked = false; /* PING INTEGRATION: */
-    let consentedAcctsArr = [];
+    // let consentedAcctsArr = [];
 
     return (
       <div className="accounts privacy-security">
@@ -260,7 +266,7 @@ class PrivacySecurity extends React.Component {
                               <CustomInput type="radio" id={`${partner1.name}_yes`} name={partner1.name} label="Yes" />
                               <CustomInput type="radio" id={`${partner1.name}_no`} readOnly checked name={partner1.name} label="No" />
                             </Col>
-                            <Col md={12} lg={4}><a href="#" className="partner-overlay" onClick={this.toggleModal}>{partner1.learn_more}</a></Col>{/* TODO add back Learn More modal popup */}
+                            <Col md={12} lg={4}><a href="#" id="0" className="partner-overlay" onClick={this.toggleModal}>{partner1.learn_more}</a></Col>{/* TODO add back Learn More modal popup */}
                           </Row>
                         </div>
                         <div>
@@ -270,7 +276,7 @@ class PrivacySecurity extends React.Component {
                               <CustomInput type="radio" id={`${partner2.name}_yes`} name={partner2.name} label="Yes" />
                               <CustomInput type="radio" id={`${partner2.name}_no`} readOnly checked name={partner2.name} label="No" />
                             </Col>
-                            <Col md={12} lg={4}><a href="#" className="partner-overlay" onClick={this.toggleModal}>{partner2.learn_more}</a></Col>{/* TODO add back Learn More modal popup */}
+                          <Col md={12} lg={4}><a href="#" id="1" className="partner-overlay" onClick={this.toggleModal}>{partner2.learn_more}</a></Col>{/* TODO add back Learn More modal popup */}
                           </Row>
                         </div>
                         {/* PING INTEGRATION: This block "partner3" is only partner block modified for demos. The others are static.  */}
@@ -281,7 +287,7 @@ class PrivacySecurity extends React.Component {
                               <CustomInput type="radio" id={`${partner3.name}_yes`} checked={this.state[partner3.name]} name={partner3.name} label="Yes" onClick={this.toggle} />
                               <CustomInput type="radio" id={`${partner3.name}_no`} checked={!this.state[partner3.name]} name={partner3.name} label="No" onClick={this.toggle} />
                             </Col>
-                            <Col md={12} lg={4}><a href="#" className="partner-overlay" onClick={this.toggleModal}>{partner3.learn_more}</a></Col>
+                          <Col md={12} lg={4}><a href="#" id="2" className="partner-overlay" onClick={this.toggleModal}>{partner3.learn_more}</a></Col>
                           </Row>
                           <Row className={classNames("accounts-access", { "visible": this.state.isOpen })}>
                             <Col>
@@ -304,7 +310,7 @@ class PrivacySecurity extends React.Component {
                           {this.state.isModalOpen &&
                             <div className="psmodal psmodal-anywealthadvisor">
                               <a href="#" className="close" onClick={this.toggleModal}><span className="sr-only">Close</span></a>
-                              <div dangerouslySetInnerHTML={{ __html: partner3.modal }} />
+                          <div dangerouslySetInnerHTML={{ __html: partnerModalArr[this.state.partnerLearnMoreModal] }} />
                             </div>
                           }
                         </div>
